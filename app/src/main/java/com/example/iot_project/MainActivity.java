@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,6 +29,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setSelectedItemId(R.id.home);
 
     }
+
+    public void onBtnClick(View view){
+        TextView colorText = findViewById(R.id.textView2);
+        int red = (int)(Math.random()*255);
+        int green = (int)(Math.random()*255);
+        int blue = (int)(Math.random()*255);
+        colorText.setText(String.valueOf(red)+", "+String.valueOf(green)+", "+ String.valueOf(blue));
+        colorText.setTextColor(Color.rgb(red,green,blue));
+    }
+
     Home homeFragment = new Home();
     Library libraryFragment = new Library();
 
