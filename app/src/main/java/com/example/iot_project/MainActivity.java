@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         colorText.setTextColor(Color.rgb(red,green,blue));
     }
 
+    //new comment to see the compare and pull-request
+
     Home homeFragment = new Home();
     Library libraryFragment = new Library();
     Profile profileFragment = new Profile();
