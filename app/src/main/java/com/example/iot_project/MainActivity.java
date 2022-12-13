@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     Home homeFragment = new Home();
     Library libraryFragment = new Library();
+    Profile profileFragment = new Profile();
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.library:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment).commit();
+                return true;
+
+            case R.id.profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
                 return true;
 
         }

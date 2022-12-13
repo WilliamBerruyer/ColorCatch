@@ -3,9 +3,13 @@
     <item
         android:id="@+id/home"
         android:title="Home"
-        android:icon="@drawable/ic_action_home"/>
+        android:icon="@drawable/ic_action_homepage"/>
     <item
         android:id="@+id/library"
         android:title="Library"
-        android:icon="@drawable/ic_action_library"/>
+        android:icon="@drawable/ic_action_librarycolor"/>
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_action_profile"/>
 </menu>
