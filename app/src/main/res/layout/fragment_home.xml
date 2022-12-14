@@ -85,12 +85,13 @@
                         app:cardBackgroundColor="#134074"
                         app:cardCornerRadius="15dp" />
 
+                    <!--Description-->
                     <LinearLayout
                         android:id="@+id/layoutDescriptionColor"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginRight="13dp"
                         android:orientation="vertical">
 
                         <LinearLayout

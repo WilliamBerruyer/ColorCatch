@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ColorDetails">
+
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <!-- Top Layout -->
+        <LinearLayout
+            android:id="@+id/topScreenLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Back arrow Layout -->
+            <RelativeLayout
+                android:id="@+id/backArrowLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintStart_toStartOf="@+id/scrollView2"
+                app:layout_constraintTop_toTopOf="@+id/scrollView2">
+
+                <ImageView
+                    android:id="@+id/imageBackArrowColorDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/backarrow" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <!--Scroll view -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutVertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/colorRectangle"
+                    android:layout_width="match_parent"
+                    android:layout_height="317dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    app:cardBackgroundColor="#134074"
+                    app:cardCornerRadius="15dp" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layoutDescriptionRow1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/colorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxWidth="200dp"
+                            android:singleLine="true"
+                            android:text="Ingido Dye"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/gradientButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_action_gradientbutton" />
+
+                        <ImageButton
+                            android:id="@+id/paletteButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_action_palettebutton" />
+
+                        <ImageButton
+                            android:id="@+id/likeButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_action_likebutton" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/timeOfScan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="an hour ago"
+                        android:textColor="#858585"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <!--Separator-->
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@android:color/darker_gray"
+                    android:visibility="visible" />
+
+                <!-- Text Hex Value -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:fontFamily="sans-serif-black"
+                        android:text="HEX"
+                        android:textColor="#858585"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="33dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5" />
+
+                    <TextView
+                        android:id="@+id/hexTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:text="#134074"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Text RGB Value -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:fontFamily="sans-serif-black"
+                        android:text="RGB"
+                        android:textColor="#858585"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="33dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5" />
+
+                    <TextView
+                        android:id="@+id/rgbTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:text="19, 64, 116"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Text HSB Value -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:fontFamily="sans-serif-black"
+                        android:text="HSB"
+                        android:textColor="#858585"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="33dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5" />
+
+                    <TextView
+                        android:id="@+id/hsbTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:text="212, 84, 45"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Text CMYK Value -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:fontFamily="sans-serif-black"
+                        android:text="CMYK"
+                        android:textColor="#858585"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5" />
+
+                    <TextView
+                        android:id="@+id/cmykTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:text="42, 100, 0, 49"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!--Separator-->
+                <View
+                    android:id="@+id/separator2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@android:color/darker_gray"
+                    android:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/colorDetailColorDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:text="Indigo is a deep color close to the color wheel blue, as well as to some variants of ultramarine, based on the ancient dye of the same name. The word 'indigo' comes from the Latin word indicum, meaning 'Indian', as the dye was originally exported to Europe from India." />
+
+
+                <!--Separator-->
+                <View
+                    android:id="@+id/separator3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@android:color/darker_gray"
+                    android:visibility="visible" />
+
+                <!-- Title Palette suggestions -->
+                <TextView
+                    android:id="@+id/textPaletteSuggestionsHead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center_vertical"
+                    android:text="Palettes Suggestion"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Item Palette Template -->
+                <LinearLayout
+                    android:id="@+id/paletteLinearLayoutVertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/paletteColorsLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/paletteColorOne"
+                            android:layout_width="wrap_content"
+                            android:layout_height="70dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="-20dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#CDB4DB"
+                            app:cardCornerRadius="15dp"
+                            app:contentPaddingLeft="20dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/paletteColorTwo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="70dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#FFC8DD"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="2dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/paletteColorThree"
+                            android:layout_width="wrap_content"
+                            android:layout_height="70dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#FFAFCC"
+                            app:cardCornerRadius="0dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/paletteColorFour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="70dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#BDE0FE"
+                            app:cardCornerRadius="0dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/paletteColorFive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="70dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="-20dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#A2D2FF"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="1.99dp"
+                            app:contentPaddingRight="20dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutVerticalDescriptionPalette"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/descriptionLayoutRowPalette"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/paletteName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxWidth="200dp"
+                                android:singleLine="true"
+                                android:text="#Palette 31"
+                                android:textColor="#000000"
+                                android:textStyle="bold" />
+
+                            <Space
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+
+                            <ImageButton
+                                android:id="@+id/likeButtonPalette"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_action_likebutton" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!--Allow to show the last item, its hidden by the menu bar otherwise-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"></View>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

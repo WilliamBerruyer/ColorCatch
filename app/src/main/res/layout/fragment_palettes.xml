@@ -17,14 +17,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <!-- Scroll View -->
+        <!-- Top Layout -->
         <LinearLayout
+            android:id="@+id/topScreenLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <!-- Back arrow Layout -->
             <RelativeLayout
-                android:id="@+id/logoLayoutLibrary"
+                android:id="@+id/backArrowLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="40dp"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="@+id/scrollView2">
 
                 <ImageView
-                    android:id="@+id/imageLogoLibrary"
+                    android:id="@+id/imageBackArrowLibrary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -45,7 +46,7 @@
 
             <!-- Title Recent -->
             <TextView
-                android:id="@+id/textRecentHead"
+                android:id="@+id/textPalettesHead"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="22dp"
@@ -59,7 +60,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/createPaletteButton"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="60dp"
@@ -72,12 +73,12 @@
 
         <!--Scroll view -->
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollViewRecent"
+            android:id="@+id/scrollViewPalettes"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/linearLayoutVerticalRecent"
+                android:id="@+id/linearLayoutVerticalPalettes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="1dp"
