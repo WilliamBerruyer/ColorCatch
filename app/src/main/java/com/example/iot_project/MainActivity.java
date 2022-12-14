@@ -3,8 +3,10 @@ package com.example.iot_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Library libraryFragment = new Library();
     Profile profileFragment = new Profile();
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -49,6 +52,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
     }
 }
 
