@@ -32,13 +32,39 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
+        /*connect();
 
+        client.setCallback(new MqttCallbackExtended() {
+            @Override
+            public void connectComplete(boolean reconnect, String serverURI) {
+                if (reconnect) {
+                    System.out.println("Reconnected to : " + serverURI);
+                    // Re-subscribe as we lost it due to new session
+                    subscribe("rgb");
+                } else {
+                    System.out.println("Connected to: " + serverURI);
+                    subscribe("rgb");
+                }
+            }
+            @Override
+            public void connectionLost(Throwable cause) {
+                System.out.println("The Connection was lost.");
+            }
+            @Override
+            public void messageArrived(String topic, MqttMessage message)
+                    throws Exception {
+                String newMessage = new String(message.getPayload());
+                System.out.println("Incoming message: " + newMessage);
 
+                 // add code here to interact with elements(text views, buttons)using data from newMessage
+            }
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+            }
+        });*/
 
     }
     Home homeFragment = new Home();
@@ -105,8 +131,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 {
                     // Something went wrong e.g. connection timeout or firewall problems
                     Log.d(TAG, "onFailure");
-                    System.out.println(TAG + " Oh no! Failed to connect to " +
-                            SERVER_URI);
+                    System.out.println(TAG + " Oh no! Failed to connect to " + SERVER_URI);
                 }
             });
         } catch (MqttException e) {
