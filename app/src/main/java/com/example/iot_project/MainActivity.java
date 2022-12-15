@@ -3,13 +3,11 @@ package com.example.iot_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -39,14 +37,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.home:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                 return true;
 
             case R.id.library:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment).commit();
                 return true;
 
             case R.id.profile:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
                 return true;
 
@@ -56,14 +57,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed(){
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
+        try {
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            Log.d("class", "items in backstack " + backStackEntryCount);
+            if (backStackEntryCount > 0) {
+                super.onBackPressed();
+            } else if(bottomNavigationView.getSelectedItemId() == R.id.home && backStackEntryCount == 0){
+                super.onBackPressed();
+            }else {
+                bottomNavigationView.setSelectedItemId(R.id.home);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 }
 

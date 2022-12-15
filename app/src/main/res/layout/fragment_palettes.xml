@@ -29,10 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="40dp"
+                android:layout_marginTop="22dp"
                 app:layout_constraintStart_toStartOf="@+id/scrollView2"
                 app:layout_constraintTop_toTopOf="@+id/scrollView2">
 
-                <ImageView
+                <!--<ImageView
                     android:id="@+id/imageBackArrowLibrary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -40,11 +41,30 @@
                     android:layout_marginLeft="22dp"
                     android:layout_marginTop="22dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/backarrow" />
+                    app:srcCompat="@drawable/backarrow" />-->
 
             </RelativeLayout>
+            <!-- Logo Layout -->
+            <RelativeLayout
+                android:id="@+id/logoLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/scrollView2"
+                app:layout_constraintTop_toTopOf="@+id/scrollView2"
+                android:layout_marginBottom="40dp">
 
-            <!-- Title Recent -->
+                <ImageView
+                    android:id="@+id/imageLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/logo_vector" />
+            </RelativeLayout>
+
+            <!-- Title Palettes -->
             <TextView
                 android:id="@+id/textPalettesHead"
                 android:layout_width="match_parent"
@@ -55,7 +75,7 @@
                 android:gravity="center_vertical"
                 android:text="Palettes"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 

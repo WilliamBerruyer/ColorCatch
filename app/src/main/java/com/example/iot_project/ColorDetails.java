@@ -1,5 +1,6 @@
 package com.example.iot_project;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,13 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ColorDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ColorDetails extends Fragment {
+public class ColorDetails extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +63,8 @@ public class ColorDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_color_details, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_color_details, container, false);
+        return root;
     }
 }

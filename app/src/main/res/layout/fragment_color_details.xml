@@ -17,13 +17,33 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <!-- Top Layout -->
-        <LinearLayout
+        <!-- Logo Layout -->
+        <RelativeLayout
+            android:id="@+id/logoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/scrollView2"
+            app:layout_constraintTop_toTopOf="@+id/scrollView2"
+            android:layout_marginBottom="40dp">
+
+            <ImageView
+                android:id="@+id/imageLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/logo_vector" />
+        </RelativeLayout>
+
+        <!-- old back arrow -->
+       <!-- <LinearLayout
             android:id="@+id/topScreenLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <!-- Back arrow Layout -->
+            &lt;!&ndash; Back arrow Layout &ndash;&gt;
             <RelativeLayout
                 android:id="@+id/backArrowLayout"
                 android:layout_width="wrap_content"
@@ -33,17 +53,18 @@
                 app:layout_constraintTop_toTopOf="@+id/scrollView2">
 
                 <ImageView
-                    android:id="@+id/imageBackArrowColorDetails"
+                    android:id="@+id/imageBackArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="22dp"
                     android:layout_marginTop="22dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/backarrow" />
+                    app:srcCompat="@drawable/backarrow"/>
 
             </RelativeLayout>
-        </LinearLayout>
+        </LinearLayout>-->
+
 
 
         <!--Scroll view -->
@@ -66,7 +87,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/colorRectangle"
                     android:layout_width="match_parent"
-                    android:layout_height="317dp"
+                    android:layout_height="350dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     app:cardBackgroundColor="#134074"
