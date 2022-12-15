@@ -156,16 +156,17 @@
                 </LinearLayout>
 
                 <!--Allow to show the last item, its hidden by the menu bar otherwise-->
+
                 <TextView
                     android:id="@+id/likesListText2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="150dp"
+                    android:layout_marginLeft="160dp"
                     android:layout_weight="1"
-                    android:textSize="25sp"
                     android:gravity="center_vertical"
                     android:text="SCAN"
                     android:textColor="#000000"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
 
                 <View
