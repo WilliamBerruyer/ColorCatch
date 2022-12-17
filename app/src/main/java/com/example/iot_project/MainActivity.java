@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
-        /*connect();
+   /*     connect();
 
         client.setCallback(new MqttCallbackExtended() {
             @Override
@@ -43,10 +43,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 if (reconnect) {
                     System.out.println("Reconnected to : " + serverURI);
                     // Re-subscribe as we lost it due to new session
-                    subscribe("rgb");
+                    subscribe("home/iot/iot.py");
+
                 } else {
                     System.out.println("Connected to: " + serverURI);
-                    subscribe("rgb");
+                    subscribe("home/iot/iot.py");
                 }
             }
             @Override
@@ -54,17 +55,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 System.out.println("The Connection was lost.");
             }
             @Override
-            public void messageArrived(String topic, MqttMessage message)
-                    throws Exception {
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+
+             // add code here to interact with elements(text views, buttons)using data from newMessage
+
                 String newMessage = new String(message.getPayload());
                 System.out.println("Incoming message: " + newMessage);
 
-                 // add code here to interact with elements(text views, buttons)using data from newMessage
+                String[] spStg = newMessage.split(",");
+                int r, g, b;
+                r = Integer.parseInt(spStg[0]);
+                g = Integer.parseInt(spStg[1]);
+                b = Integer.parseInt(spStg[2]);
+                System.out.println("R : " + r + " G : " + g + " B :" + b);
+                int i=Integer.parseInt(newMessage);
             }
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
             }
         });*/
+
 
     }
     Home homeFragment = new Home();
@@ -112,11 +122,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
     }
+
     private void connect(){
         String clientId = MqttClient.generateClientId();
-        client =
-                new MqttAndroidClient(this.getApplicationContext(), SERVER_URI,
-                        clientId);
+        client = new MqttAndroidClient(this.getApplicationContext(), SERVER_URI, clientId);
         try {
             IMqttToken token = client.connect();
             token.setActionCallback(new IMqttActionListener() {
@@ -138,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             e.printStackTrace();
         }
     }
+
     private void subscribe(String topicToSubscribe) {
         final String topic = topicToSubscribe;
         int qos = 1;
@@ -160,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             e.printStackTrace();
         }
     }
-
 
 }
 
