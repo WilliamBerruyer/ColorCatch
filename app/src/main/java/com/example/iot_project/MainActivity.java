@@ -2,6 +2,7 @@ package com.example.iot_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -10,7 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+/*
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -18,15 +19,20 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.MqttMessage;*/
 
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     BottomNavigationView bottomNavigationView;
-    private MqttAndroidClient client;
+   // private MqttAndroidClient client;
     private static final String SERVER_URI = "tcp://test.mosquitto.org:1883";
     private static final String TAG = "MainActivity";
+
+    Home homeFragment = new Home();
+    Library libraryFragment = new Library();
+    Profile profileFragment = new Profile();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
     }
-    Home homeFragment = new Home();
-    Library libraryFragment = new Library();
-    Profile profileFragment = new Profile();
+
 
 
     @Override
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    private void connect(){
+    /*private void connect(){
         String clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(this.getApplicationContext(), SERVER_URI, clientId);
         try {
@@ -169,23 +173,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } catch (MqttException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
 
 
-
-/*
-next_Activity_button = (Button) findViewById(R.id.first_activity_button);
-        question1 = (TextView) findViewById(R.id.question1_id);
-
-        question1.setText("Q1 - How to pass the data between activities in Android?\n" + "\n" + "Ans - Intent");
-
-        // Add_button add clicklistener
-        next_Activity_button.setOnClickListener(v -> {
-        // Intents are objects of the android.content.Intent type. Your code can send them to the Android system defining
-        // the components you are targeting. Intent to start an activity called SecondActivity with the following code
-        Intent intent = new Intent(MainActivity.this, Library.class);
-        // start the activity connect to the specified class
-        startActivity(intent);
-        });*/
+//}

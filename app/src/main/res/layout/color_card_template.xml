@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- Color Catched Item -->
+    <LinearLayout
+        android:tag="colorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:tag="colorRectangle"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            app:cardCornerRadius="15dp" />
+
+        <!--Description-->
+        <LinearLayout
+            android:id="@+id/layoutDescriptionColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layoutDescriptionRow1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:tag="colorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxWidth="200dp"
+                    android:singleLine="true"
+                    android:text="Ingido Dye"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/gradientButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_action_gradientbutton" />
+
+                <ImageButton
+                    android:id="@+id/paletteButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_action_palettebutton" />
+
+                <ImageButton
+                    android:id="@+id/likeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_action_likebutton" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/timeOfScan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="an hour ago"
+                android:textColor="#858585"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
