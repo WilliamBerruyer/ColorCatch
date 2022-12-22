@@ -41,19 +41,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
-   /*     connect();
-
+        connect();
         client.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
                 if (reconnect) {
                     System.out.println("Reconnected to : " + serverURI);
                     // Re-subscribe as we lost it due to new session
-                    subscribe("home/iot/iot.py");
+                    subscribe("rgb");
 
                 } else {
                     System.out.println("Connected to: " + serverURI);
-                    subscribe("home/iot/iot.py");
+                    subscribe("rgb");
                 }
             }
             @Override
@@ -62,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-
-             // add code here to interact with elements(text views, buttons)using data from newMessage
 
                 String newMessage = new String(message.getPayload());
                 System.out.println("Incoming message: " + newMessage);
@@ -79,51 +76,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
             }
-        });*/
+        });
 
-
-    }
-
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.home:
-                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-                return true;
-
-            case R.id.library:
-                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment).commit();
-                return true;
-
-            case R.id.profile:
-                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
-                return true;
-
-        }
-        return false;
-    }
-
-    @Override
-    public void onBackPressed(){
-        try {
-            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-            Log.d("class", "items in backstack " + backStackEntryCount);
-            if (backStackEntryCount > 0) {
-                super.onBackPressed();
-            } else if(bottomNavigationView.getSelectedItemId() == R.id.home && backStackEntryCount == 0){
-                super.onBackPressed();
-            }else {
-                bottomNavigationView.setSelectedItemId(R.id.home);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -175,5 +129,45 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                return true;
+
+            case R.id.library:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment).commit();
+                return true;
+
+            case R.id.profile:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                return true;
+
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed(){
+        try {
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            Log.d("class", "items in backstack " + backStackEntryCount);
+            if (backStackEntryCount > 0) {
+                super.onBackPressed();
+            } else if(bottomNavigationView.getSelectedItemId() == R.id.home && backStackEntryCount == 0){
+                super.onBackPressed();
+            }else {
+                bottomNavigationView.setSelectedItemId(R.id.home);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 
