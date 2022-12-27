@@ -1,6 +1,7 @@
 package com.example.iot_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,6 +39,10 @@ public class Home extends Fragment{
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
         //Layout to call to add color scanned items
         colorList = (LinearLayout) root.findViewById(R.id.linearLayoutColorScannedList);
+
+        if(getArguments() != null){
+            int r1 = getArguments().getInt("key");
+        }
 
         //create 10 colors randomly for test purposes
         for (int i = 1; i <= 10; i++) {
@@ -99,14 +104,16 @@ public class Home extends Fragment{
             CardView colorRecUpdated = (CardView) root.findViewWithTag(colorRecName);
 
             //generate random r g b colors for test purposes
+
             Random Red = new Random();
-            int r = Red.nextInt(255);
+            int r = 0;
 
             Random G = new Random();
-            int g = G.nextInt(255);
+            int g = 0;
 
             Random B = new Random();
-            int b = B.nextInt(255);
+            int b = 0;
+
 
             //update the color of the rectangle
             colorRecUpdated.setCardBackgroundColor(Color.rgb(r,g,b));

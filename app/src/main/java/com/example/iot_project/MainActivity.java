@@ -2,13 +2,19 @@ package com.example.iot_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,11 +26,13 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     BottomNavigationView bottomNavigationView;
+    CardView card;
     private MqttAndroidClient client;
     private static final String SERVER_URI = "tcp://test.mosquitto.org:1883";
     private static final String TAG = "MainActivity";
@@ -33,11 +41,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Library libraryFragment = new Library();
     Profile profileFragment = new Profile();
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        card = findViewById(R.id.colorRectangle);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -61,24 +70,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-
                 String newMessage = new String(message.getPayload());
                 System.out.println("Incoming message: " + newMessage);
-
                 String[] spStg = newMessage.split(",");
                 int r, g, b;
                 r = Integer.parseInt(spStg[0]);
                 g = Integer.parseInt(spStg[1]);
                 b = Integer.parseInt(spStg[2]);
                 System.out.println("R : " + r + " G : " + g + " B :" + b);
+                card.setBackgroundColor(Color.rgb(4*r,4*g,4*b));
                 int i=Integer.parseInt(newMessage);
             }
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
             }
         });
-
-
     }
 
     private void connect(){
