@@ -27,9 +27,6 @@ import org.w3c.dom.Text;
  */
 public class ColorDetails extends Fragment{
 
-    private static final String PREFS_NAME = "YOUR_TAG";
-    private static final String DATA_TAG = "DATA_TAG";
-    private static final String data = "oh, what a data!";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -3,7 +3,11 @@ package com.example.iot_project;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Java Code to get a color name from rgb/hex value/awt color
@@ -219,6 +223,25 @@ public class ColorUtils {
         return getColorNameFromRgb(color.getRed(), color.getGreen(),
                 color.getBlue());
     }*/
+
+    public String getTime(){
+        Long tsLong = System.currentTimeMillis()/1000;
+        return getDateCurrentTimeZone(tsLong);
+    }
+
+    public  String getDateCurrentTimeZone(long timestamp) {
+        try{
+            Calendar calendar = Calendar.getInstance();
+            TimeZone tz = TimeZone.getDefault();
+            calendar.setTimeInMillis(timestamp * 1000);
+            calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date currenTimeZone = (Date) calendar.getTime();
+            return sdf.format(currenTimeZone);
+        }catch (Exception e) {
+        }
+        return "";
+    }
 
     public String colorToHex(int red, int green, int blue){
         String hex = String.format("#%02x%02x%02x", red, green, blue);

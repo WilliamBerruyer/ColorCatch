@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final String SERVER_URI = "tcp://test.mosquitto.org:1883";
     private static final String TAG = "MainActivity";
 
+    private DBHandler dbHandler;
+    ColorUtils colorFinder = new ColorUtils();
+
     Home homeFragment = new Home();
     Library libraryFragment = new Library();
     Profile profileFragment = new Profile();
@@ -50,6 +53,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        // creating a new dbhandler class
+        // and passing our context to it.
+        dbHandler = new DBHandler(MainActivity.this);
+
         connect();
         client.setCallback(new MqttCallbackExtended() {
             @Override
@@ -78,6 +86,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 g = Integer.parseInt(spStg[1]);
                 b = Integer.parseInt(spStg[2]);
                 System.out.println("R : " + r + " G : " + g + " B :" + b);
+
+                String colorName = colorFinder.getColorNameFromRgb(r,g,b);
+
+                String hexColor = colorFinder.colorToHex(r,g,b);
+
+                String rgbColor = colorFinder.colorToRGB(hexColor);
+
+                String hsvColor = colorFinder.colorToHsb(hexColor);
+
+                String cmykColor = colorFinder.rgbToCmyk(hexColor);
+
+                String timeStamp = colorFinder.getTime();
+
+                // on below line we are calling a method to add new
+                // course to sqlite data and pass all our values to it.
+                dbHandler.addNewColor(colorName, hexColor, rgbColor, hsvColor, cmykColor, timeStamp);
+                System.out.println("Color Name: " + colorName);
+
                 card.setBackgroundColor(Color.rgb(4*r,4*g,4*b));
                 int i=Integer.parseInt(newMessage);
             }
