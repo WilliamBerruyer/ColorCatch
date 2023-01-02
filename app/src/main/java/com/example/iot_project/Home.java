@@ -3,6 +3,7 @@ package com.example.iot_project;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,6 +13,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Home extends Fragment{
@@ -26,7 +31,14 @@ public class Home extends Fragment{
     private LinearLayout colorClicked;
     private LinearLayout colorList;
 
+
     ColorUtils colorFinder = new ColorUtils();
+
+    private DBHandler dbHandler;
+
+    private ArrayList<ColorModal> colorModalArrayList;
+    private ColorRVAdapter colorRVAdapter;
+    private RecyclerView colorRV;
 
     public Home() {
         // Required empty public constructor
@@ -37,15 +49,33 @@ public class Home extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
+
+        // initializing our all variables.
+        colorModalArrayList = new ArrayList<>();
+        dbHandler =  new DBHandler(getActivity());
+        colorModalArrayList = dbHandler.readCourses();
+
+        // on below line passing our array lost to our adapter class.
+        colorRVAdapter = new ColorRVAdapter(colorModalArrayList, getActivity());
+        colorRV = (RecyclerView) root.findViewById(R.id.idRVColors);
+
+        // setting layout manager for our recycler view.
+        colorRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // setting our adapter to recycler view.
+        colorRV.setAdapter(colorRVAdapter);
+
+        colorRV.setItemAnimator(new DefaultItemAnimator());
+
         //Layout to call to add color scanned items
-        colorList = (LinearLayout) root.findViewById(R.id.linearLayoutColorScannedList);
+        //colorList = (LinearLayout) root.findViewById(R.id.linearLayoutColorScannedList);
 
         if(getArguments() != null){
             int r1 = getArguments().getInt("key");
         }
 
         //create 10 colors randomly for test purposes
-        for (int i = 1; i <= 10; i++) {
+        /*for (int i = 1; i <= 10; i++) {
             View child = getLayoutInflater().inflate(R.layout.color_card_template, null);
             colorList.addView(child);
 
@@ -128,11 +158,11 @@ public class Home extends Fragment{
 
             //update the name of the color properly
             colorNameTextUpdated.setText( colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b)));
-        }
+        }*/
 
         //special empty space to add at the end of scroll views
-        View emptySpace = getLayoutInflater().inflate(R.layout.empty_space_end_scrollview, null);
-        colorList.addView(emptySpace);
+        //View emptySpace = getLayoutInflater().inflate(R.layout.empty_space_end_scrollview, null);
+        //colorList.addView(emptySpace);
 
         // Inflate the layout for this fragment
         return root;

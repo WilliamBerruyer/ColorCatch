@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/homeContainer">
 
     <LinearLayout
         android:id="@+id/topLayout"
@@ -49,20 +50,11 @@
             android:textStyle="bold"
             android:layout_marginBottom="10dp"/>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollViewHomePage"
+        <!--recycler view for displaying our colors-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idRVColors"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/linearLayoutColorScannedList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:orientation="vertical">
-            </LinearLayout>
+            android:layout_height="match_parent" />
 
-        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

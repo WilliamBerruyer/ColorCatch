@@ -3,11 +3,11 @@ package com.example.iot_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
@@ -82,12 +82,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 System.out.println("Incoming message: " + newMessage);
                 String[] spStg = newMessage.split(",");
                 int r, g, b;
-                r = Integer.parseInt(spStg[0]);
-                g = Integer.parseInt(spStg[1]);
-                b = Integer.parseInt(spStg[2]);
+                r = Integer.parseInt(spStg[0]) * 4;
+                g = Integer.parseInt(spStg[1]) * 4;
+                b = Integer.parseInt(spStg[2]) * 4;
                 System.out.println("R : " + r + " G : " + g + " B :" + b);
 
-                String colorName = colorFinder.getColorNameFromRgb(r,g,b);
+                String colorName = colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b));
 
                 String hexColor = colorFinder.colorToHex(r,g,b);
 
@@ -102,9 +102,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
                 dbHandler.addNewColor(colorName, hexColor, rgbColor, hsvColor, cmykColor, timeStamp);
-                System.out.println("Color Name: " + colorName);
 
-                card.setBackgroundColor(Color.rgb(4*r,4*g,4*b));
+                getSupportFragmentManager().executePendingTransactions();
+                Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("homeFrag");
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.detach(currentFragment).commitNowAllowingStateLoss();
+                fragmentTransaction.attach(currentFragment).commitAllowingStateLoss();
+                fragmentTransaction.commit();
+
+                card.setBackgroundColor(Color.rgb(r,g,b));
                 int i=Integer.parseInt(newMessage);
             }
             @Override
@@ -167,17 +173,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.home:
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "homeFrag").commit();
                 return true;
 
             case R.id.library:
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment, "libraryFrag").commit();
                 return true;
 
             case R.id.profile:
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment,"profileFrag").commit();
                 return true;
 
         }

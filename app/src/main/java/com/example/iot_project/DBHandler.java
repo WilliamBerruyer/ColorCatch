@@ -2,8 +2,11 @@ package com.example.iot_project;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -37,6 +40,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // below variable is for our color cmyk column.
     private static final String TIME_COL = "time";
+
 
     // creating a constructor for our database handler.
     public DBHandler(Context context) {
@@ -93,6 +97,38 @@ public class DBHandler extends SQLiteOpenHelper {
         // database after adding database.
         db.close();
     }
+
+    // we have created a new method for reading all the courses.
+    public ArrayList<ColorModal> readCourses() {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursorColor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        // on below line we are creating a new array list.
+        ArrayList<ColorModal> colorModalArrayList = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursorColor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                colorModalArrayList.add(new ColorModal(cursorColor.getString(1),
+                        cursorColor.getString(2),
+                        cursorColor.getString(3),
+                        cursorColor.getString(4),
+                        cursorColor.getString(5),
+                        cursorColor.getString(6)));
+            } while (cursorColor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursorColor.close();
+        return colorModalArrayList;
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
