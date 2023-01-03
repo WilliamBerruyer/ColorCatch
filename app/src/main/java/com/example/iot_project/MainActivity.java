@@ -92,6 +92,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     b = 255;
                 }
 
+                for (int k = 0; k < 4; k++) {
+
+                    if (k==0){g = r;};
+                    if (k==1){g = r; r = b;};
+                    if (k==2){b = r; r = g ; g = b;};
+                    if (k==3){b = r; r = g;};
+
+                    String rs = Integer.toHexString((int) (r));
+                    String gs = Integer.toHexString((int) (g));
+                    String bs = Integer.toHexString((int) (b));
+                    System.out.println( "#" + rs + gs + bs);
+                }
+
+
                 String colorName = colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b));
 
                 String hexColor = colorFinder.colorToHex(r, g, b);
