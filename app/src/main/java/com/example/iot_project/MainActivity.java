@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     Home homeFragment = new Home();
     Library libraryFragment = new Library();
-    Profile profileFragment = new Profile();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -189,12 +188,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, libraryFragment, "libraryFrag").commit();
                 return true;
-
-            case R.id.profile:
-                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment, "profileFrag").commit();
-                return true;
-
         }
         return false;
     }
