@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,11 +29,12 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.w3c.dom.Text;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     BottomNavigationView bottomNavigationView;
-    CardView card;
     private MqttAndroidClient client;
     private static final String SERVER_URI = "tcp://test.mosquitto.org:1883";
     private static final String TAG = "MainActivity";
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        card = findViewById(R.id.colorRectangle);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 b = Integer.parseInt(spStg[2]) * 4;
                 System.out.println("R : " + r + " G : " + g + " B :" + b);
 
+                if(r > 255){r = 255;}
+                if(g > 255){g = 255;}
+                if(b > 255){b = 255;}
+
                 String colorName = colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b));
 
                 String hexColor = colorFinder.colorToHex(r,g,b);
@@ -110,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragmentTransaction.attach(currentFragment).commitAllowingStateLoss();
                 fragmentTransaction.commit();
 
-                card.setBackgroundColor(Color.rgb(r,g,b));
                 int i=Integer.parseInt(newMessage);
             }
             @Override
