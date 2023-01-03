@@ -26,13 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Home extends Fragment implements ColorRVAdapter.ItemClickListener{
-
-    private LinearLayout colorClicked;
-    private LinearLayout colorList;
-
-
-    ColorUtils colorFinder = new ColorUtils();
+public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
 
     private DBHandler dbHandler;
 
@@ -52,12 +46,12 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener{
 
         // initializing our all variables.
         colorModalArrayList = new ArrayList<>();
-        dbHandler =  new DBHandler(getActivity());
+        dbHandler = new DBHandler(getActivity());
         colorModalArrayList = dbHandler.readCourses();
 
         // on below line passing our array lost to our adapter class.
         colorRVAdapter = new ColorRVAdapter(colorModalArrayList, getActivity());
-        colorRV = (RecyclerView) root.findViewById(R.id.idRVColors);
+        colorRV = root.findViewById(R.id.idRVColors);
 
         // setting layout manager for our recycler view.
         colorRV.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -71,99 +65,9 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener{
         //Layout to call to add color scanned items
         //colorList = (LinearLayout) root.findViewById(R.id.linearLayoutColorScannedList);
 
-        if(getArguments() != null){
+        if (getArguments() != null) {
             int r1 = getArguments().getInt("key");
         }
-
-        //create 10 colors randomly for test purposes
-        /*for (int i = 1; i <= 10; i++) {
-            View child = getLayoutInflater().inflate(R.layout.color_card_template, null);
-            colorList.addView(child);
-
-            //get the color layout global element
-            LinearLayout color = (LinearLayout) root.findViewWithTag("colorLayout");
-            //redefine its tag to make it unique
-            String colorName = "colorLayout" + i;
-            color.setTag(colorName);
-            LinearLayout colorUpdated = (LinearLayout) root.findViewWithTag(colorName);
-
-            //listener for to redirect to color details
-            colorUpdated.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-
-                    //get the num of the layout clicked
-                    String layoutNum = view.getTag().toString();
-                    String num = layoutNum.replaceAll("[^0-9]", "");
-
-                    CardView colorRec = view.findViewWithTag("colorRectangle"+num);
-                    TextView colorNameTextUpdated = view.findViewWithTag("colorName"+num);
-
-                    ColorStateList viewColor = colorRec.getCardBackgroundColor();
-                    int colorId = viewColor.getDefaultColor();
-
-                    //get a string containing the hex value of the color clicked
-                    String hexColor = String.format("#%06X", (0xFFFFFF & colorId));
-
-                    String rgbColor = colorFinder.colorToRGB(hexColor);
-
-                    String hsvColor = colorFinder.colorToHsb(hexColor);
-
-                    String cmykColor = colorFinder.rgbToCmyk(hexColor);
-
-                    //Create the list of arguments to give to colorDetails
-                    Bundle args = new Bundle();
-                    args.putString("color", hexColor);
-                    args.putString("name", String.valueOf(colorNameTextUpdated.getText()));
-                    args.putString("hexValue", hexColor);
-                    args.putString("rgbValue", rgbColor);
-                    args.putString("hsvValue", hsvColor);
-                    args.putString("cmykValue", cmykColor);
-
-                    ColorDetails colorD = new ColorDetails();
-                    colorD.setArguments(args);
-
-                    getParentFragmentManager().beginTransaction().replace(R.id.container, colorD).addToBackStack(null).commit();
-                }
-            });
-
-            //get the color rectangle of the layout
-            CardView colorRec = (CardView) root.findViewWithTag("colorRectangle");
-            //redefine its tag to make it unique
-            String colorRecName = "colorRectangle" + i;
-            colorRec.setTag(colorRecName);
-            CardView colorRecUpdated = (CardView) root.findViewWithTag(colorRecName);
-
-            //generate random r g b colors for test purposes
-
-            Random Red = new Random();
-            int r = 0;
-
-            Random G = new Random();
-            int g = 0;
-
-            Random B = new Random();
-            int b = 0;
-
-
-            //update the color of the rectangle
-            colorRecUpdated.setCardBackgroundColor(Color.rgb(r,g,b));
-            //colorRecUpdated.setBackgroundColor(Color.rgb(r, g, b));
-
-            //get the name of the color
-            TextView colorNameText = (TextView) root.findViewWithTag("colorName");
-            //redefine its tag to make it unique
-            String colorNameTextString = "colorName" + i;
-            colorNameText.setTag(colorNameTextString);
-            TextView colorNameTextUpdated = (TextView) root.findViewWithTag(colorNameTextString);
-
-            //update the name of the color properly
-            colorNameTextUpdated.setText( colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b)));
-        }*/
-
-        //special empty space to add at the end of scroll views
-        //View emptySpace = getLayoutInflater().inflate(R.layout.empty_space_end_scrollview, null);
-        //colorList.addView(emptySpace);
 
         // Inflate the layout for this fragment
         return root;

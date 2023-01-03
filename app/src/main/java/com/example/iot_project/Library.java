@@ -36,10 +36,10 @@ public class Library extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_library, container, false);
-        palettes = (LinearLayout) root.findViewById(R.id.horizontalLayoutPalettes);
-        gradients = (LinearLayout) root.findViewById(R.id.horizontalLayoutGradients);
-        likes = (LinearLayout) root.findViewById(R.id.horizontalLayoutLikes);
-        palettes.setOnClickListener((View.OnClickListener) this);
+        palettes = root.findViewById(R.id.horizontalLayoutPalettes);
+        gradients = root.findViewById(R.id.horizontalLayoutGradients);
+        likes = root.findViewById(R.id.horizontalLayoutLikes);
+        palettes.setOnClickListener(this);
         return root;
     }
 

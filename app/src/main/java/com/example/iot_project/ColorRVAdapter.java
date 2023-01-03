@@ -18,8 +18,8 @@ import java.util.ArrayList;
 public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHolder> {
 
     // variable for our array list and context
-    private ArrayList<ColorModal> colorModalArrayList;
-    private Context context;
+    private final ArrayList<ColorModal> colorModalArrayList;
+    private final Context context;
     private ItemClickListener mItemClickListener;
 
 
@@ -77,9 +77,10 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our text views.
-        private TextView colorNameTV, colorHexTV, colorRgbTV, colorHsvTV, colorCmykTV, colorTimeTV;
-        private CardView cardColor;
-        private LinearLayout colorLayout;
+        private final TextView colorNameTV;
+        private final TextView colorTimeTV;
+        private final CardView cardColor;
+        private final LinearLayout colorLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

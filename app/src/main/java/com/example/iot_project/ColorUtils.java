@@ -1,6 +1,5 @@
 package com.example.iot_project;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 
 import java.text.SimpleDateFormat;
@@ -9,15 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-/**
- * Java Code to get a color name from rgb/hex value/awt color
- *
- * The part of looking up a color name from the rgb values is edited from
- * https://gist.github.com/nightlark/6482130#file-gistfile1-java (that has some errors) by Ryan Mast (nightlark)
- *
- * @author Xiaoxiao Li
- *
- */
 public class ColorUtils {
 
     /**
@@ -214,16 +204,6 @@ public class ColorUtils {
         return getColorNameFromRgb(r, g, b);
     }
 
-    /*public int colorToHex(Color c) {
-        return Integer.decode("0x"
-                + Integer.toHexString(c.getRGB()).substring(2));
-    }
-
-    public String getColorNameFromColor(Color color) {
-        return getColorNameFromRgb(color.getRed(), color.getGreen(),
-                color.getBlue());
-    }*/
-
     public String getTime(){
         Long tsLong = System.currentTimeMillis()/1000;
         return getDateCurrentTimeZone(tsLong);
@@ -236,7 +216,7 @@ public class ColorUtils {
             calendar.setTimeInMillis(timestamp * 1000);
             calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date currenTimeZone = (Date) calendar.getTime();
+            Date currenTimeZone = calendar.getTime();
             return sdf.format(currenTimeZone);
         }catch (Exception e) {
         }
@@ -347,8 +327,8 @@ public class ColorUtils {
         }
 
         public int computeMSE(int pixR, int pixG, int pixB) {
-            return (int) (((pixR - r) * (pixR - r) + (pixG - g) * (pixG - g) + (pixB - b)
-                    * (pixB - b)) / 3);
+            return ((pixR - r) * (pixR - r) + (pixG - g) * (pixG - g) + (pixB - b)
+                    * (pixB - b)) / 3;
         }
 
         public int getR() {
