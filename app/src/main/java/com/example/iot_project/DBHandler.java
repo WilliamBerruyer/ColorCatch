@@ -87,7 +87,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + TIME_COL + " TEXT)";
 
         String queryPalettes = "CREATE TABLE " + TABLE_PALETTES_NAME + " ("
-                + HEX_COL_PAL + " TEXT PRIMARY KEY,"
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + HEX_COL_PAL + " TEXT,"
                 + COLOR1_COL + " TEXT,"
                 + COLOR2_COL + " TEXT,"
                 + COLOR3_COL + " TEXT,"
@@ -151,8 +152,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // after adding all values we are passing
         // content values to our table.
-        db.insertWithOnConflict(TABLE_PALETTES_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-
+        //db.insertWithOnConflict(TABLE_PALETTES_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.insert(TABLE_PALETTES_NAME, null, values);
         // at last we are closing our
         // database after adding database.
         db.close();

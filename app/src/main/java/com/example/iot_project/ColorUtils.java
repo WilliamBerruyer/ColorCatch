@@ -325,8 +325,32 @@ public class ColorUtils {
             green = (green + Color.green(mix)) / 2;
             blue = (blue + Color.blue(mix)) / 2;
         }
-
+        System.out.println("Random PAstel color generated : " + red + ", " + green + ", " + blue);
         return colorToHex(red, green, blue);
+    }
+
+    public String generateBrightColorPaletteR(int r, int g, int b, int j) {
+        if (j == 0) {
+            g = r;
+        }
+        ;
+        if (j == 1) {
+            g = r;
+            r = b;
+        }
+        ;
+        if (j == 2) {
+            b = r;
+            r = g;
+            g = b;
+        }
+        ;
+        if (j == 3) {
+            b = r;
+            r = g;
+        }
+        ;
+        return colorToHex(r, g, b);
     }
 
     /**
