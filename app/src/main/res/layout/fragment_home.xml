@@ -55,7 +55,8 @@
             android:id="@+id/idRVColors"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="80dp" />
+            android:paddingBottom="80dp"
+            />
 
         <!--Allow to show the last item, its hidden by the menu bar otherwise-->
 

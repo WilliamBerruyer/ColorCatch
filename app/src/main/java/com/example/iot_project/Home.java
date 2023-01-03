@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
@@ -48,26 +49,29 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         colorModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(getActivity());
         colorModalArrayList = dbHandler.readCourses();
+        //Collections.reverse(colorModalArrayList);
+
 
         // on below line passing our array lost to our adapter class.
         colorRVAdapter = new ColorRVAdapter(colorModalArrayList, getActivity());
         colorRV = root.findViewById(R.id.idRVColors);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         // setting layout manager for our recycler view.
-        colorRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        colorRV.setLayoutManager(linearLayoutManager);
+
 
         // setting our adapter to recycler view.
         colorRV.setAdapter(colorRVAdapter);
 
         colorRV.setItemAnimator(new DefaultItemAnimator());
+
+        //allow to click on the elements from the recycler view
         colorRVAdapter.addItemClickListener(this);
 
-        //Layout to call to add color scanned items
-        //colorList = (LinearLayout) root.findViewById(R.id.linearLayoutColorScannedList);
-
-        if (getArguments() != null) {
-            int r1 = getArguments().getInt("key");
-        }
+        colorRV.smoothScrollToPosition(colorModalArrayList.size());
 
         // Inflate the layout for this fragment
         return root;
@@ -75,9 +79,9 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
 
     @Override
     public void onItemClick(int position) {
-        System.out.println("Color clicked " + position);
-        ColorItem colorItem = dbHandler.getSingleDataInfo(position + 1);
 
+        ColorItem colorItem = dbHandler.getSingleDataInfo(position + 1);
+        System.out.println("Color clicked " + position + " color name clicked : " + colorItem.getName());
         //get a string containing the hex value of the color clicked
         String hexColor = colorItem.getHex();
 
