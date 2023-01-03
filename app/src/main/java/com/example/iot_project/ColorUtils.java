@@ -2,11 +2,15 @@ package com.example.iot_project;
 
 import android.graphics.Color;
 
+import androidx.core.content.ContextCompat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.TimeZone;
+
 
 public class ColorUtils {
 
@@ -307,6 +311,22 @@ public class ColorUtils {
 
         String output = rS + ", " + gS + ", " + bS + ", " + dS;
         return output;
+    }
+
+    public String generateRandomColor(int mix) {
+        Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+
+        // mix the color
+        if (mix != 0) {
+            red = (red + Color.red(mix)) / 2;
+            green = (green + Color.green(mix)) / 2;
+            blue = (blue + Color.blue(mix)) / 2;
+        }
+
+        return colorToHex(red, green, blue);
     }
 
     /**

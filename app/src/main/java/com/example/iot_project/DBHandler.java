@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -18,29 +17,52 @@ public class DBHandler extends SQLiteOpenHelper {
     // below int is our database version
     private static final int DB_VERSION = 1;
 
-    // below variable is for our table name.
-    private static final String TABLE_NAME = "colors";
 
-    // below variable is for our id column.
+    // below variable is for our color table name.
+    private static final String TABLE_COLORS_NAME = "colors";
+
+    // below variable is for the id column.
     private static final String ID_COL = "id";
 
-    // below variable is for our course name column
+    // below variable is for the name column
     private static final String NAME_COL = "name";
 
-    // below variable id for our course duration column.
+    // below variable id for the hex column.
     private static final String HEX_COL = "hex";
 
-    // below variable for our course description column.
+    // below variable for the rgb column.
     private static final String RGB_COL = "rgb";
 
-    // below variable is for our color hsv column.
+    // below variable is for the hsv column.
     private static final String HSV_COL = "hsv";
 
-    // below variable is for our color cmyk column.
+    // below variable is for the cmyk column.
     private static final String CMYK_COL = "cmyk";
 
-    // below variable is for our color cmyk column.
+    // below variable is for the cmyk column.
     private static final String TIME_COL = "time";
+
+
+    // below variable is for our palette table name.
+    private static final String TABLE_PALETTES_NAME = "palettes";
+
+    // below variable is for the id column.
+    private static final String ID_COL_PAL = "id";
+
+    // below variable id for the hex column.
+    private static final String HEX_COL_PAL = "hex";
+
+    // below variable for the rgb column.
+    private static final String COLOR1_COL = "color1";
+
+    // below variable is for the hsv column.
+    private static final String COLOR2_COL = "color2";
+
+    // below variable is for the cmyk column.
+    private static final String COLOR3_COL = "color3";
+
+    // below variable is for the cmyk column.
+    private static final String COLOR4_COL = "color4";
 
 
     // creating a constructor for our database handler.
@@ -55,7 +77,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // an sqlite query and we are
         // setting our column names
         // along with their data types.
-        String query = "CREATE TABLE " + TABLE_NAME + " ("
+        String query = "CREATE TABLE " + TABLE_COLORS_NAME + " ("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME_COL + " TEXT,"
                 + HEX_COL + " TEXT,"
@@ -64,9 +86,17 @@ public class DBHandler extends SQLiteOpenHelper {
                 + CMYK_COL + " TEXT,"
                 + TIME_COL + " TEXT)";
 
+        String queryPalettes = "CREATE TABLE " + TABLE_PALETTES_NAME + " ("
+                + HEX_COL_PAL + " TEXT PRIMARY KEY,"
+                + COLOR1_COL + " TEXT,"
+                + COLOR2_COL + " TEXT,"
+                + COLOR3_COL + " TEXT,"
+                + COLOR4_COL + " TEXT)";
+
         // at last we are calling a exec sql
         // method to execute above sql query
         db.execSQL(query);
+        db.execSQL(queryPalettes);
     }
 
     // this method is use to add new course to our sqlite database.
@@ -92,7 +122,36 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // after adding all values we are passing
         // content values to our table.
-        db.insert(TABLE_NAME, null, values);
+        db.insert(TABLE_COLORS_NAME, null, values);
+
+        // at last we are closing our
+        // database after adding database.
+        db.close();
+    }
+
+    // this method is use to add new course to our sqlite database.
+    public void addNewPalette(String hex_original, String c1, String c2, String c3, String c4) {
+
+        // on below line we are creating a variable for
+        // our sqlite database and calling writable method
+        // as we are writing data in our database.
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // on below line we are creating a
+        // variable for content values.
+        ContentValues values = new ContentValues();
+
+        // on below line we are passing all values
+        // along with its key and value pair.
+        values.put(HEX_COL_PAL, hex_original);
+        values.put(COLOR1_COL, c1);
+        values.put(COLOR2_COL, c2);
+        values.put(COLOR3_COL, c3);
+        values.put(COLOR4_COL, c4);
+
+        // after adding all values we are passing
+        // content values to our table.
+        db.insertWithOnConflict(TABLE_PALETTES_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
         // at last we are closing our
         // database after adding database.
@@ -100,13 +159,13 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // we have created a new method for reading all the courses.
-    public ArrayList<ColorModal> readCourses() {
+    public ArrayList<ColorModal> readColors() {
         // on below line we are creating a
         // database for reading our database.
         SQLiteDatabase db = this.getReadableDatabase();
 
         // on below line we are creating a cursor with query to read data from database.
-        Cursor cursorColor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursorColor = db.rawQuery("SELECT * FROM " + TABLE_COLORS_NAME, null);
 
         // on below line we are creating a new array list.
         ArrayList<ColorModal> colorModalArrayList = new ArrayList<>();
@@ -130,18 +189,49 @@ public class DBHandler extends SQLiteOpenHelper {
         return colorModalArrayList;
     }
 
+    // we have created a new method for reading all the courses.
+    public ArrayList<PaletteModal> readPalettes() {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursorPalette = db.rawQuery("SELECT * FROM " + TABLE_PALETTES_NAME, null);
+
+        // on below line we are creating a new array list.
+        ArrayList<PaletteModal> paletteModalArrayList = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursorPalette.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                paletteModalArrayList.add(new PaletteModal(cursorPalette.getString(1),
+                        cursorPalette.getString(2),
+                        cursorPalette.getString(3),
+                        cursorPalette.getString(4),
+                        cursorPalette.getString(5)));
+            } while (cursorPalette.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursorPalette.close();
+        return paletteModalArrayList;
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // this method is called to check if the table exists already.
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COLORS_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PALETTES_NAME);
         onCreate(db);
     }
 
     public ColorItem getSingleDataInfo(int position) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID_COL + "=" + position, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COLORS_NAME + " WHERE " + ID_COL + "=" + position, null);
         ColorItem color = new ColorItem();
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();

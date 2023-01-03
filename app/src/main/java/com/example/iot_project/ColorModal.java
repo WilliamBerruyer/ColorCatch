@@ -4,7 +4,6 @@ import android.graphics.Color;
 
 public class ColorModal {
     // variables for our colors,
-    // description, tracks and duration, id.
     private String colorName;
     private String colorHex;
     private String colorRgb;

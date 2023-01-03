@@ -2,20 +2,15 @@ package com.example.iot_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,12 +22,9 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.w3c.dom.Text;
-
-import java.util.concurrent.TimeUnit;
 
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
     private MqttAndroidClient client;
@@ -73,10 +65,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     subscribe("rgb");
                 }
             }
+
             @Override
             public void connectionLost(Throwable cause) {
                 System.out.println("The Connection was lost.");
             }
+
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 String newMessage = new String(message.getPayload());
@@ -88,13 +82,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 b = Integer.parseInt(spStg[2]) * 4;
                 System.out.println("R : " + r + " G : " + g + " B :" + b);
 
-                if(r > 255){r = 255;}
-                if(g > 255){g = 255;}
-                if(b > 255){b = 255;}
+                if (r > 255) {
+                    r = 255;
+                }
+                if (g > 255) {
+                    g = 255;
+                }
+                if (b > 255) {
+                    b = 255;
+                }
 
                 String colorName = colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b));
 
-                String hexColor = colorFinder.colorToHex(r,g,b);
+                String hexColor = colorFinder.colorToHex(r, g, b);
 
                 String rgbColor = colorFinder.colorToRGB(hexColor);
 
@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
                 dbHandler.addNewColor(colorName, hexColor, rgbColor, hsvColor, cmykColor, timeStamp);
+                dbHandler.addNewPalette(hexColor, colorFinder.generateRandomColor(Color.parseColor(hexColor)), colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)));
+
 
                 getSupportFragmentManager().executePendingTransactions();
                 Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("homeFrag");
@@ -115,15 +117,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragmentTransaction.attach(currentFragment).commitAllowingStateLoss();
                 fragmentTransaction.commit();
 
-                int i=Integer.parseInt(newMessage);
+                int i = Integer.parseInt(newMessage);
             }
+
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
             }
         });
     }
 
-    private void connect(){
+    private void connect() {
         String clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(this.getApplicationContext(), SERVER_URI, clientId);
         try {
@@ -135,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     Log.d(TAG, "onSuccess");
                     System.out.println(TAG + " Success. Connected to " + SERVER_URI);
                 }
+
                 @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception)
-                {
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
                     Log.d(TAG, "onFailure");
                     System.out.println(TAG + " Oh no! Failed to connect to " + SERVER_URI);
@@ -158,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 public void onSuccess(IMqttToken asyncActionToken) {
                     System.out.println("Subscription successful to topic: " + topic);
                 }
+
                 @Override
                 public void onFailure(IMqttToken asyncActionToken,
                                       Throwable exception) {
@@ -187,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.profile:
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment,"profileFrag").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment, "profileFrag").commit();
                 return true;
 
         }
@@ -195,15 +199,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         try {
             int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
             Log.d("class", "items in backstack " + backStackEntryCount);
             if (backStackEntryCount > 0) {
                 super.onBackPressed();
-            } else if(bottomNavigationView.getSelectedItemId() == R.id.home && backStackEntryCount == 0){
+            } else if (bottomNavigationView.getSelectedItemId() == R.id.home && backStackEntryCount == 0) {
                 super.onBackPressed();
-            }else {
+            } else {
                 bottomNavigationView.setSelectedItemId(R.id.home);
             }
         } catch (Exception e) {
