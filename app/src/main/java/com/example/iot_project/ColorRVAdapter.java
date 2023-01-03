@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,8 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
     // variable for our array list and context
     private ArrayList<ColorModal> colorModalArrayList;
     private Context context;
+    private ItemClickListener mItemClickListener;
+
 
     // constructor
     public ColorRVAdapter(ArrayList<ColorModal> colorModalArrayList, Context context) {
@@ -34,19 +38,25 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // on below line we are setting data
         // to our views of recycler view item.
         ColorModal modal = colorModalArrayList.get(position);
         holder.colorNameTV.setText(modal.getColorName());
-        /*holder.colorHexTV.setText(modal.getColorHex());
-        holder.colorRgbTV.setText(modal.getColorRgb());
-        holder.colorHsvTV.setText(modal.getColorHsv());
-        holder.colorCmykTV.setText(modal.getColorCmyk());*/
         holder.colorTimeTV.setText(modal.getColorTime());
         holder.cardColor.setCardBackgroundColor(modal.getColorHexToInt(modal.getColorHex()));
+        holder.colorLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(holder.getAdapterPosition());
+                }
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -54,22 +64,31 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         return colorModalArrayList.size();
     }
 
+    //Define your Interface method here
+    public interface ItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void addItemClickListener(ItemClickListener listener) {
+        mItemClickListener = listener;
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our text views.
         private TextView colorNameTV, colorHexTV, colorRgbTV, colorHsvTV, colorCmykTV, colorTimeTV;
         private CardView cardColor;
+        private LinearLayout colorLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our text views
-            colorNameTV = itemView.findViewById(R.id.colorName);/*
-            colorHexTV = itemView.findViewById(R.id.idTVCourseDescription);
-            colorRgbTV = itemView.findViewById(R.id.idTVCourseDuration);
-            colorHsvTV = itemView.findViewById(R.id.idTVCourseTracks);
-            colorCmykTV = itemView.findViewById(R.id.idTVCourseDuration);*/
+            colorNameTV = itemView.findViewById(R.id.colorName);
             colorTimeTV = itemView.findViewById(R.id.timeOfScan);
             cardColor = itemView.findViewById(R.id.colorRectangle);
+            colorLayout = itemView.findViewById(R.id.colorLayout);
         }
     }
+
 }

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
     <!-- Color Catched Item -->
     <LinearLayout
-        android:tag="colorLayout"
+        android:id="@+id/colorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

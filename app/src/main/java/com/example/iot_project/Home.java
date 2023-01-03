@@ -26,7 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Home extends Fragment{
+public class Home extends Fragment implements ColorRVAdapter.ItemClickListener{
 
     private LinearLayout colorClicked;
     private LinearLayout colorList;
@@ -66,6 +66,7 @@ public class Home extends Fragment{
         colorRV.setAdapter(colorRVAdapter);
 
         colorRV.setItemAnimator(new DefaultItemAnimator());
+        colorRVAdapter.addItemClickListener(this);
 
         //Layout to call to add color scanned items
         //colorList = (LinearLayout) root.findViewById(R.id.linearLayoutColorScannedList);
@@ -166,5 +167,34 @@ public class Home extends Fragment{
 
         // Inflate the layout for this fragment
         return root;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        System.out.println("Color clicked " + position);
+        ColorItem colorItem = dbHandler.getSingleDataInfo(position + 1);
+
+        //get a string containing the hex value of the color clicked
+        String hexColor = colorItem.getHex();
+
+        String rgbColor = colorItem.getRgb();
+
+        String hsvColor = colorItem.getHsv();
+
+        String cmykColor = colorItem.getCmyk();
+
+        //Create the list of arguments to give to colorDetails
+        Bundle args = new Bundle();
+        args.putString("color", hexColor);
+        args.putString("name", colorItem.getName());
+        args.putString("hexValue", hexColor);
+        args.putString("rgbValue", rgbColor);
+        args.putString("hsvValue", hsvColor);
+        args.putString("cmykValue", cmykColor);
+
+        ColorDetails colorD = new ColorDetails();
+        colorD.setArguments(args);
+
+        getParentFragmentManager().beginTransaction().replace(R.id.container, colorD).addToBackStack(null).commit();
     }
 }

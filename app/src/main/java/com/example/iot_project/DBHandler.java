@@ -136,4 +136,34 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
+    public ColorItem getSingleDataInfo(int position) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID_COL + "=" + position, null);
+        ColorItem color = new ColorItem();
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            //setting related user info in User Object
+
+            int name_col_index = cursor.getColumnIndex(NAME_COL);
+            int hex_col_index = cursor.getColumnIndex(HEX_COL);
+            int rgb_col_index = cursor.getColumnIndex(RGB_COL);
+            int hsv_col_index = cursor.getColumnIndex(HSV_COL);
+            int cmyk_col_index = cursor.getColumnIndex(CMYK_COL);
+
+            color.setName(cursor.getString(name_col_index));
+            color.setHex(cursor.getString(hex_col_index));
+            color.setRgb(cursor.getString(rgb_col_index));
+            color.setHsv(cursor.getString(hsv_col_index));
+            color.setCmyk(cursor.getString(cmyk_col_index));
+        }
+        //close cursor & database
+        cursor.close();
+        db.close();
+
+        return color;
+
+    }
 }
