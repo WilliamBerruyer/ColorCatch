@@ -3,6 +3,7 @@ package com.example.iot_project;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -211,6 +212,39 @@ public class DBHandler extends SQLiteOpenHelper {
                         cursorPalette.getString(3),
                         cursorPalette.getString(4),
                         cursorPalette.getString(5)));
+            } while (cursorPalette.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursorPalette.close();
+        return paletteModalArrayList;
+    }
+
+    // we have created a new method for reading all the courses.
+    public ArrayList<PaletteModal> readSpecificPalettes(String color) {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+        String c = "#ff4008";
+
+
+        //SELECT distinct palettes.ID, palettes.hex, palettes.COlOR1, palettes.COlOR2, palettes.COlOR3, palettes.COlOR4, palettes.COlOR5  FROM palettes left outer join colors on colors.hex = palettes.hex;
+        // on below line we are creating a cursor with query to read data from database. PROBLEM IS HERE
+        Cursor cursorPalette = db.rawQuery("SELECT distinct palettes.hex"  + ", " + COLOR1_COL+ ", " + COLOR2_COL + ", " + COLOR3_COL + ", " + COLOR4_COL + " FROM " + TABLE_PALETTES_NAME + " LEFT OUTER JOIN " + TABLE_COLORS_NAME + " ON colors.hex " + "=" + " palettes.hex" + " WHERE " + " colors.hex " + "= " + DatabaseUtils.sqlEscapeString(color)  , null);
+
+        // on below line we are creating a new array list.
+        ArrayList<PaletteModal> paletteModalArrayList = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursorPalette.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                paletteModalArrayList.add(new PaletteModal(cursorPalette.getString(0),
+                        cursorPalette.getString(1),
+                        cursorPalette.getString(2),
+                        cursorPalette.getString(3),
+                        cursorPalette.getString(4)));
             } while (cursorPalette.moveToNext());
             // moving our cursor to next.
         }

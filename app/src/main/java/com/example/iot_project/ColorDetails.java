@@ -5,31 +5,26 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ColorDetails#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ColorDetails extends Fragment{
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ColorDetails extends Fragment {
 
     private ColorUtils colorFinder = new ColorUtils();
+
+    //access to db
+    private DBHandler dbHandler;
+    private ArrayList<PaletteModal> paletteModalArrayList;
+    private PaletteRVAdapter paletteRVAdapter;
+    private RecyclerView paletteRV;
 
 
     //init
@@ -38,32 +33,6 @@ public class ColorDetails extends Fragment{
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ColorDetails.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ColorDetails newInstance(String param1, String param2) {
-        ColorDetails fragment = new ColorDetails();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,13 +46,14 @@ public class ColorDetails extends Fragment{
         TextView hsbText = root.findViewById(R.id.hsbTextValue);
         TextView cmykText = root.findViewById(R.id.cmykTextValue);
 
+
+        String hexTextString = "";
         //get the arguments from home page
         Bundle bundle = this.getArguments();
-        if(getArguments() != null){
-
+        if (getArguments() != null) {
             String colorHex = bundle.getString("color");
             String color_name = bundle.getString("name");
-            String hexTextString = bundle.getString("hexValue");
+            hexTextString = bundle.getString("hexValue");
             String rgbTextString = bundle.getString("rgbValue");
             String hsbTextString = bundle.getString("hsvValue");
             String cmykTextString = bundle.getString("cmykValue");
@@ -96,8 +66,31 @@ public class ColorDetails extends Fragment{
             rgbText.setText(rgbTextString);
             hsbText.setText(hsbTextString);
             cmykText.setText(cmykTextString);
-
         }
+
+        paletteModalArrayList = new ArrayList<>();
+        dbHandler = new DBHandler(getActivity());
+        paletteModalArrayList = dbHandler.readSpecificPalettes(hexTextString);
+
+        // on below line passing our array lost to our adapter class.
+        paletteRVAdapter = new PaletteRVAdapter(paletteModalArrayList, getActivity());
+        paletteRV = root.findViewById(R.id.idRVPalettes);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        // setting layout manager for our recycler view.
+        paletteRV.setLayoutManager(linearLayoutManager);
+
+        // setting our adapter to recycler view.
+        paletteRV.setAdapter(paletteRVAdapter);
+
+        paletteRV.setItemAnimator(new DefaultItemAnimator());
+
+        //allow to click on the elements from the recycler view
+        //paletteRVAdapter.addItemClickListener(this);
+
+        //paletteRV.smoothScrollToPosition(paletteModalArrayList.size());
 
         // Inflate the layout for this fragment
         return root;

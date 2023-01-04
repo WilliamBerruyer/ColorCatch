@@ -35,8 +35,6 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         colorModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(getActivity());
         colorModalArrayList = dbHandler.readColors();
-        //Collections.reverse(colorModalArrayList);
-
 
         // on below line passing our array lost to our adapter class.
         colorRVAdapter = new ColorRVAdapter(colorModalArrayList, getActivity());

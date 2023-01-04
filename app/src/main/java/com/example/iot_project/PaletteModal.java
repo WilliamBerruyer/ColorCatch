@@ -1,5 +1,7 @@
 package com.example.iot_project;
 
+import android.graphics.Color;
+
 public class PaletteModal {
     private String hexOriginal;
     private String c1;
@@ -56,5 +58,9 @@ public class PaletteModal {
 
     public void setC4(String c4) {
         this.c4 = c4;
+    }
+
+    public int getColorHexToInt(String color){
+        return Color.parseColor(color);
     }
 }
