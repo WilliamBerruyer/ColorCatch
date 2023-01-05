@@ -235,7 +235,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // on below line we are creating a cursor with query to read data from database.
-        Cursor cursorPalette = db.rawQuery("SELECT * FROM " + TABLE_PALETTES_NAME, null);
+        Cursor cursorPalette = db.rawQuery("SELECT * FROM " + TABLE_PALETTES_NAME + " WHERE " + LIKED_COL_PAL + " = " + 1, null);
 
         // on below line we are creating a new array list.
         ArrayList<PaletteModal> paletteModalArrayList = new ArrayList<>();
