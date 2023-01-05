@@ -199,6 +199,35 @@ public class DBHandler extends SQLiteOpenHelper {
         return colorModalArrayList;
     }
 
+    // we have created a new method for reading all the colors.
+    public ArrayList<ColorModal> readColorsLiked() {
+        // on below line we are creating a
+        // database for reading our database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursorColor = db.rawQuery("SELECT * FROM " + TABLE_COLORS_NAME + " WHERE " + LIKED_COL + " = " + 1, null);
+
+        // on below line we are creating a new array list.
+        ArrayList<ColorModal> colorModalArrayList = new ArrayList<>();
+
+        // moving our cursor to first position.
+        if (cursorColor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                colorModalArrayList.add(new ColorModal(cursorColor.getString(1),
+                        cursorColor.getString(2),
+                        cursorColor.getInt(6),
+                        cursorColor.getString(7)));
+            } while (cursorColor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursorColor.close();
+        return colorModalArrayList;
+    }
+
     // we have created a new method for reading all the palettes.
     public ArrayList<PaletteModal> readPalettes() {
         // on below line we are creating a

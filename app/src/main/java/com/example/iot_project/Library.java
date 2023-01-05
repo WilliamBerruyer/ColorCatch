@@ -14,10 +14,10 @@ public class Library extends Fragment implements View.OnClickListener {
 
 
     private LinearLayout palettes;
-    private LinearLayout gradients;
     private LinearLayout likes;
 
     Palettes paletteFragment = new Palettes();
+    ColorLiked colorLikedFragment = new ColorLiked();
 
     public Library() {
         // Required empty public constructor
@@ -37,9 +37,9 @@ public class Library extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_library, container, false);
         palettes = root.findViewById(R.id.horizontalLayoutPalettes);
-        gradients = root.findViewById(R.id.horizontalLayoutGradients);
         likes = root.findViewById(R.id.horizontalLayoutLikes);
         palettes.setOnClickListener(this);
+        likes.setOnClickListener(this);
         return root;
     }
 
@@ -50,6 +50,10 @@ public class Library extends Fragment implements View.OnClickListener {
             case R.id.horizontalLayoutPalettes:
                 getParentFragmentManager().beginTransaction().replace(R.id.container, paletteFragment).addToBackStack(null).commit();
                 break;
+            case R.id.horizontalLayoutLikes:
+                getParentFragmentManager().beginTransaction().replace(R.id.container, colorLikedFragment).addToBackStack(null).commit();
+                break;
         }
+
     }
 }

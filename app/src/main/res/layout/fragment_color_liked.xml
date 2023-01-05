@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Palettes">
+    tools:context=".ColorLiked">
 
     <LinearLayout
         android:id="@+id/topLayoutLibrary"
@@ -56,27 +56,27 @@
 
             <!-- Title Palettes -->
             <TextView
-                android:id="@+id/textPalettesHead"
+                android:id="@+id/textColorLikedHead"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="22dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center_vertical"
-                android:text="Palettes Liked"
+                android:text="Colors Liked"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-
         <!--recycler view for displaying our colors-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/idRVPalettesLiked"
+            android:id="@+id/idRVColorsLiked"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="80dp"
             />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
