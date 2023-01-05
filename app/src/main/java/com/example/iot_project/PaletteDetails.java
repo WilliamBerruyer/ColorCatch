@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-public class PaletteDetails extends Fragment  {
+public class PaletteDetails extends Fragment implements PaletteRVAdapter.ItemClickListener {
+
+    private DBHandler dbHandler;
 
     public PaletteDetails() {
         // Required empty public constructor
@@ -36,6 +39,8 @@ public class PaletteDetails extends Fragment  {
         TextView t4 = root.findViewById(R.id.colorFourText);
         TextView t5 = root.findViewById(R.id.colorFiveText);
 
+        ImageButton likeButton = root.findViewById(R.id.likeButtonPalette);
+
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
             String color1 = bundle.getString("color1");
@@ -43,6 +48,8 @@ public class PaletteDetails extends Fragment  {
             String color3 = bundle.getString("color3");
             String color4 = bundle.getString("color4");
             String color5 = bundle.getString("color5");
+            String likedString = bundle.getString("liked");
+            String position = bundle.getString("position");
 
             c1.setCardBackgroundColor(Color.parseColor(color1));
             c2.setCardBackgroundColor(Color.parseColor(color2));
@@ -62,6 +69,29 @@ public class PaletteDetails extends Fragment  {
             setCorrectFontColor(color4, t4);
             setCorrectFontColor(color5, t5);
 
+            if (likedString.equals("1")){
+                likeButton.setImageResource(R.drawable.like_full);
+                likeButton.setTag("like_full");
+            } else if (likedString.equals("0")){
+                likeButton.setImageResource(R.drawable.ic_action_likebutton);
+                likeButton.setTag("ic_action_likebutton");
+            }
+
+            likeButton.setOnClickListener(view -> {
+                String tag = (String) likeButton.getTag();
+                int pos = Integer.parseInt(position )+1;
+                if(tag.equals("ic_action_likebutton")){
+                    likeButton.setImageResource(R.drawable.like_full);
+                    likeButton.setTag("like_full");
+                } else if (tag.equals("like_full")) {
+                    likeButton.setImageResource(R.drawable.ic_action_likebutton);
+                    likeButton.setTag("ic_action_likebutton");
+                }
+                dbHandler.addPaletteLikeToDB(pos);
+            });
+
+            dbHandler = new DBHandler(getActivity());
+
         }
 
         // Inflate the layout for this fragment
@@ -80,4 +110,13 @@ public class PaletteDetails extends Fragment  {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onLikeClick(int position) {
+
+    }
 }
