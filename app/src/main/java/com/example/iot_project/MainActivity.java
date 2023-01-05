@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
-                dbHandler.addNewColor(colorName, hexColor,0, timeStamp);
+                dbHandler.addNewColor(colorName, hexColor, rgbColor, hsvColor, cmykColor,0, timeStamp);
                 dbHandler.addNewPalette(hexColor, colorFinder.generateRandomColor(Color.parseColor(hexColor)), colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)), 0);
                 dbHandler.addNewPalette(hexColor, colorFinder.generateBrightColorPaletteR(r, g, b, 0), colorFinder.generateBrightColorPaletteR(r, g, b, 1), colorFinder.generateBrightColorPaletteR(r, g, b,2), colorFinder.generateBrightColorPaletteR(r, g, b,3), 0);
 

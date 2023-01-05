@@ -109,7 +109,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // this method is use to add new course to our sqlite database.
-    public void addNewColor(String colorName, String colorHex, int like,  String time) {
+    public void addNewColor(String colorName, String colorHex, String colorRgb, String colorHsv, String colorCmyk, int like,  String time) {
 
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
@@ -124,6 +124,9 @@ public class DBHandler extends SQLiteOpenHelper {
         // along with its key and value pair.
         values.put(NAME_COL, colorName);
         values.put(HEX_COL, colorHex);
+        values.put(RGB_COL, colorRgb);
+        values.put(HSV_COL, colorHsv);
+        values.put(CMYK_COL, colorCmyk);
         values.put(LIKED_COL, like);
         values.put(TIME_COL, time);
 

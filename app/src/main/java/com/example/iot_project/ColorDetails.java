@@ -119,6 +119,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
 
     @Override
     public void onLikeClick(int position) {
+        System.out.println("clicked on position " + position);
         dbHandler.addPaletteLikeToDB(position + 1);
     }
 
