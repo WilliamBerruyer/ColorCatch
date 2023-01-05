@@ -285,12 +285,14 @@ public class DBHandler extends SQLiteOpenHelper {
             int rgb_col_index = cursor.getColumnIndex(RGB_COL);
             int hsv_col_index = cursor.getColumnIndex(HSV_COL);
             int cmyk_col_index = cursor.getColumnIndex(CMYK_COL);
+            int liked_col_index = cursor.getColumnIndex(LIKED_COL);
 
             color.setName(cursor.getString(name_col_index));
             color.setHex(cursor.getString(hex_col_index));
             color.setRgb(cursor.getString(rgb_col_index));
             color.setHsv(cursor.getString(hsv_col_index));
             color.setCmyk(cursor.getString(cmyk_col_index));
+            color.setLiked(Integer.parseInt(cursor.getString(liked_col_index)));
         }
         //close cursor & database
         cursor.close();

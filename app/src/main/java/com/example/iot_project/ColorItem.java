@@ -7,6 +7,7 @@ public class ColorItem {
     String rgb;
     String hsv;
     String cmyk;
+    int liked;
 
     public void Color(){
 
@@ -50,5 +51,13 @@ public class ColorItem {
 
     public void setCmyk(String cmyk) {
         this.cmyk = cmyk;
+    }
+
+    public int getLiked() {
+        return liked;
+    }
+
+    public void setLiked(int liked) {
+        this.liked = liked;
     }
 }

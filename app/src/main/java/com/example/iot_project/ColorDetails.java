@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         TextView rgbText = root.findViewById(R.id.rgbTextValue);
         TextView hsbText = root.findViewById(R.id.hsbTextValue);
         TextView cmykText = root.findViewById(R.id.cmykTextValue);
+        ImageButton likeButton = root.findViewById(R.id.likeButton);
 
 
         String hexTextString = "";
@@ -57,6 +59,8 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             String rgbTextString = bundle.getString("rgbValue");
             String hsbTextString = bundle.getString("hsvValue");
             String cmykTextString = bundle.getString("cmykValue");
+            String likedString = bundle.getString("liked");
+            String position = bundle.getString("position");
 
             int col = Color.parseColor(colorHex);
 
@@ -66,6 +70,27 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             rgbText.setText(rgbTextString);
             hsbText.setText(hsbTextString);
             cmykText.setText(cmykTextString);
+
+            if (likedString.equals("1")){
+                likeButton.setImageResource(R.drawable.like_full);
+                likeButton.setTag("like_full");
+            } else if (likedString.equals("0")){
+                likeButton.setImageResource(R.drawable.ic_action_likebutton);
+                likeButton.setTag("ic_action_likebutton");
+            }
+
+            likeButton.setOnClickListener(view -> {
+                String tag = (String) likeButton.getTag();
+                int pos = Integer.parseInt(position )+1;
+                if(tag.equals("ic_action_likebutton")){
+                    likeButton.setImageResource(R.drawable.like_full);
+                    likeButton.setTag("like_full");
+                } else if (tag.equals("like_full")) {
+                    likeButton.setImageResource(R.drawable.ic_action_likebutton);
+                    likeButton.setTag("ic_action_likebutton");
+                }
+                dbHandler.addColorLikeToDB(pos);
+            });
         }
 
         paletteModalArrayList = new ArrayList<>();
@@ -90,10 +115,6 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         paletteRVAdapter.addItemClickListener(this);
         paletteRVAdapter.addLikeClickListener(this);
 
-        //allow to click on the elements from the recycler view
-        //paletteRVAdapter.addItemClickListener(this);
-
-        //paletteRV.smoothScrollToPosition(paletteModalArrayList.size());
 
         // Inflate the layout for this fragment
         return root;

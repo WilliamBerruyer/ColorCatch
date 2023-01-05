@@ -73,6 +73,8 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         String hsvColor = colorItem.getHsv();
         String cmykColor = colorItem.getCmyk();
 
+        String liked = String.valueOf(colorItem.getLiked());
+
         //Create the list of arguments to give to colorDetails
         Bundle args = new Bundle();
         args.putString("color", hexColor);
@@ -81,6 +83,8 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         args.putString("rgbValue", rgbColor);
         args.putString("hsvValue", hsvColor);
         args.putString("cmykValue", cmykColor);
+        args.putString("liked", liked);
+        args.putString("position", String.valueOf(position));
 
         ColorDetails colorD = new ColorDetails();
         colorD.setArguments(args);
