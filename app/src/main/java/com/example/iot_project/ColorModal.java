@@ -6,10 +6,8 @@ public class ColorModal {
     // variables for our colors,
     private String colorName;
     private String colorHex;
-    private String colorRgb;
-    private String colorHsv;
-    private String colorCmyk;
     private String colorTime;
+    private int liked;
     private int id;
 
     // creating getter and setter methods
@@ -29,40 +27,8 @@ public class ColorModal {
         return Color.parseColor(color);
     }
 
-    public void setColorHex(String colorHex) {
-        this.colorHex = colorHex;
-    }
-
-    public String getColorRgb() {
-        return colorRgb;
-    }
-
-    public void setColorRgb(String colorRgb) {
-        this.colorRgb = colorRgb;
-    }
-
-    public String getColorHsv() {
-        return colorHsv;
-    }
-
-    public void setColorHsv(String colorHsv) {
-        this.colorHsv = colorHsv;
-    }
-
-    public String getColorCmyk() {
-        return colorCmyk;
-    }
-
-    public void setColorCmyk(String colorCmyk) {
-        this.colorCmyk = colorCmyk;
-    }
-
     public String getColorTime() {
         return colorTime;
-    }
-
-    public void setColorTime(String colorTime) {
-        this.colorTime = colorTime;
     }
 
     public int getId() {
@@ -73,14 +39,16 @@ public class ColorModal {
         this.id = id;
     }
 
+    public int getLiked(){
+        return liked;
+    }
+
     // constructor
-    public ColorModal(String colorName, String colorHex, String colorRgb, String colorHsv, String colorCmyk, String colorTime) {
+    public ColorModal(String colorName, String colorHex, int liked, String colorTime) {
         this.colorName = colorName;
         this.colorHex = colorHex;
-        this.colorRgb = colorRgb;
-        this.colorHsv = colorHsv;
-        this.colorCmyk = colorCmyk;
         this.colorTime = colorTime;
+        this.liked = liked;
     }
 
 }

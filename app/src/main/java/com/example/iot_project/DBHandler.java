@@ -1,5 +1,7 @@
 package com.example.iot_project;
 
+import static java.sql.Types.NULL;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -43,6 +45,8 @@ public class DBHandler extends SQLiteOpenHelper {
     // below variable is for the cmyk column.
     private static final String TIME_COL = "time";
 
+    private static final String LIKED_COL = "liked";
+
 
     // below variable is for our palette table name.
     private static final String TABLE_PALETTES_NAME = "palettes";
@@ -65,6 +69,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // below variable is for the cmyk column.
     private static final String COLOR4_COL = "color4";
 
+    private static final String LIKED_COL_PAL = "liked";
 
     // creating a constructor for our database handler.
     public DBHandler(Context context) {
@@ -85,15 +90,17 @@ public class DBHandler extends SQLiteOpenHelper {
                 + RGB_COL + " TEXT,"
                 + HSV_COL + " TEXT,"
                 + CMYK_COL + " TEXT,"
+                + LIKED_COL + " BOOLEAN"+ " CHECK (" + LIKED_COL + " IN (0, 1))" + ","
                 + TIME_COL + " TEXT)";
 
         String queryPalettes = "CREATE TABLE " + TABLE_PALETTES_NAME + " ("
-                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_COL_PAL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + HEX_COL_PAL + " TEXT,"
                 + COLOR1_COL + " TEXT,"
                 + COLOR2_COL + " TEXT,"
                 + COLOR3_COL + " TEXT,"
-                + COLOR4_COL + " TEXT)";
+                + COLOR4_COL + " TEXT,"
+                + LIKED_COL_PAL + " BOOLEAN"+ " CHECK (" + LIKED_COL_PAL + " IN (0, 1))" + ")";
 
         // at last we are calling a exec sql
         // method to execute above sql query
@@ -102,7 +109,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // this method is use to add new course to our sqlite database.
-    public void addNewColor(String colorName, String colorHex, String colorRgb, String colorHsv, String colorCmyk, String time) {
+    public void addNewColor(String colorName, String colorHex, String colorRgb, String colorHsv, String colorCmyk, int like,  String time) {
 
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
@@ -120,7 +127,9 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(RGB_COL, colorRgb);
         values.put(HSV_COL, colorHsv);
         values.put(CMYK_COL, colorCmyk);
+        values.put(LIKED_COL, like);
         values.put(TIME_COL, time);
+
 
         // after adding all values we are passing
         // content values to our table.
@@ -132,7 +141,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // this method is use to add new course to our sqlite database.
-    public void addNewPalette(String hex_original, String c1, String c2, String c3, String c4) {
+    public void addNewPalette(String hex_original, String c1, String c2, String c3, String c4, int like) {
 
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
@@ -150,6 +159,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLOR2_COL, c2);
         values.put(COLOR3_COL, c3);
         values.put(COLOR4_COL, c4);
+        values.put(LIKED_COL_PAL, like);
 
         // after adding all values we are passing
         // content values to our table.
@@ -160,7 +170,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // we have created a new method for reading all the courses.
+    // we have created a new method for reading all the colors.
     public ArrayList<ColorModal> readColors() {
         // on below line we are creating a
         // database for reading our database.
@@ -178,10 +188,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 // on below line we are adding the data from cursor to our array list.
                 colorModalArrayList.add(new ColorModal(cursorColor.getString(1),
                         cursorColor.getString(2),
-                        cursorColor.getString(3),
-                        cursorColor.getString(4),
-                        cursorColor.getString(5),
-                        cursorColor.getString(6)));
+                        cursorColor.getInt(6),
+                        cursorColor.getString(7)));
             } while (cursorColor.moveToNext());
             // moving our cursor to next.
         }
@@ -191,7 +199,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return colorModalArrayList;
     }
 
-    // we have created a new method for reading all the courses.
+    // we have created a new method for reading all the palettes.
     public ArrayList<PaletteModal> readPalettes() {
         // on below line we are creating a
         // database for reading our database.
@@ -221,7 +229,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return paletteModalArrayList;
     }
 
-    // we have created a new method for reading all the courses.
     public ArrayList<PaletteModal> readSpecificPalettes(String color) {
         // on below line we are creating a
         // database for reading our database.
@@ -290,5 +297,37 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
         return color;
+    }
+
+    public void addColorLikeToDB(int position){
+        int likedValue = getLikedCol(position);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        if (likedValue == 0) {
+            db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 1 + " WHERE " + ID_COL + " = " + position);
+        } else if (likedValue == 1){
+            db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 0 + " WHERE " + ID_COL + " = " + position);
+        }
+
+        //close cursor & database
+
+        db.close();
+
+    }
+
+    public int getLikedCol(int position){
+        int output = -1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COLORS_NAME + " WHERE " + ID_COL + "=" + position, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            int liked_col_index = cursor.getColumnIndex(LIKED_COL);
+            output = cursor.getInt(liked_col_index);
+        }
+        //close cursor & database
+        cursor.close();
+        db.close();
+        return output;
     }
 }

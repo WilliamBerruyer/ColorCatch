@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
     // variable for our array list and context
     private final ArrayList<ColorModal> colorModalArrayList;
     private final Context context;
-    private ItemClickListener mItemClickListener;
+    private ItemClickListener mItemClickListener, likeClickListener;
 
 
     // constructor
@@ -47,9 +48,36 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         holder.colorNameTV.setText(modal.getColorName());
         holder.colorTimeTV.setText(modal.getColorTime());
         holder.cardColor.setCardBackgroundColor(modal.getColorHexToInt(modal.getColorHex()));
-        holder.colorLayout.setOnClickListener(view -> {
+        holder.cardColor.setOnClickListener(view -> {
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(holder.getAdapterPosition());
+            }
+        });
+        holder.colorNameTV.setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(holder.getAdapterPosition());
+            }
+        });
+
+
+
+        if (modal.getLiked() ==  1) {
+            holder.likeButton.setImageResource(R.drawable.like_full);
+            holder.likeButton.setTag("like_full");
+        }
+
+        holder.likeButton.setOnClickListener(view -> {
+            String tag = (String) holder.likeButton.getTag();
+            if(tag.equals("ic_action_likebutton")){
+                holder.likeButton.setImageResource(R.drawable.like_full);
+                holder.likeButton.setTag("like_full");
+            } else if (tag.equals("like_full")) {
+                holder.likeButton.setImageResource(R.drawable.ic_action_likebutton);
+                holder.likeButton.setTag("ic_action_likebutton");
+            }
+
+            if (likeClickListener != null) {
+                likeClickListener.onLikeClick(holder.getAdapterPosition());
             }
         });
     }
@@ -64,10 +92,15 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
     //Define your Interface method here
     public interface ItemClickListener {
         void onItemClick(int position);
+        void onLikeClick(int position);
     }
 
     public void addItemClickListener(ItemClickListener listener) {
         mItemClickListener = listener;
+    }
+
+    public void addLikeClickListener(ItemClickListener listener) {
+        likeClickListener = listener;
     }
 
 
@@ -77,7 +110,7 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         private final TextView colorNameTV;
         private final TextView colorTimeTV;
         private final CardView cardColor;
-        private final LinearLayout colorLayout;
+        private final ImageButton likeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,7 +118,7 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
             colorNameTV = itemView.findViewById(R.id.colorName);
             colorTimeTV = itemView.findViewById(R.id.timeOfScan);
             cardColor = itemView.findViewById(R.id.colorRectangle);
-            colorLayout = itemView.findViewById(R.id.colorLayout);
+            likeButton = itemView.findViewById(R.id.likeButton);
         }
     }
 

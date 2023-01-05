@@ -92,23 +92,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
-                        <ImageButton
-                            android:id="@+id/gradientButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
-                            android:background="@null"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_action_gradientbutton" />
-
-                        <ImageButton
-                            android:id="@+id/paletteButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
-                            android:background="@null"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_action_palettebutton" />
 
                         <ImageButton
                             android:id="@+id/likeButton"

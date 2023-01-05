@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 r = Integer.parseInt(spStg[0]) * 4;
                 g = Integer.parseInt(spStg[1]) * 4;
                 b = Integer.parseInt(spStg[2]) * 4;
+
                 System.out.println("R : " + r + " G : " + g + " B :" + b);
 
                 //avoid errors if the colors increase above 255 due to the x4 multiplication
@@ -106,9 +107,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
-                dbHandler.addNewColor(colorName, hexColor, rgbColor, hsvColor, cmykColor, timeStamp);
-                dbHandler.addNewPalette(hexColor, colorFinder.generateRandomColor(Color.parseColor(hexColor)), colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)));
-                dbHandler.addNewPalette(hexColor, colorFinder.generateBrightColorPaletteR(r, g, b, 0), colorFinder.generateBrightColorPaletteR(r, g, b, 1), colorFinder.generateBrightColorPaletteR(r, g, b,2), colorFinder.generateBrightColorPaletteR(r, g, b,3));
+                dbHandler.addNewColor(colorName, hexColor, rgbColor, hsvColor, cmykColor,0, timeStamp);
+                dbHandler.addNewPalette(hexColor, colorFinder.generateRandomColor(Color.parseColor(hexColor)), colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)),colorFinder.generateRandomColor(Color.parseColor(hexColor)), 0);
+                dbHandler.addNewPalette(hexColor, colorFinder.generateBrightColorPaletteR(r, g, b, 0), colorFinder.generateBrightColorPaletteR(r, g, b, 1), colorFinder.generateBrightColorPaletteR(r, g, b,2), colorFinder.generateBrightColorPaletteR(r, g, b,3), 0);
 
                 getSupportFragmentManager().executePendingTransactions();
                 Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("homeFrag");

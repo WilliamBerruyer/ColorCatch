@@ -54,6 +54,7 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
 
         //allow to click on the elements from the recycler view
         colorRVAdapter.addItemClickListener(this);
+        colorRVAdapter.addLikeClickListener(this);
 
         colorRV.smoothScrollToPosition(colorModalArrayList.size());
 
@@ -65,14 +66,11 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
     public void onItemClick(int position) {
 
         ColorItem colorItem = dbHandler.getSingleDataInfo(position + 1);
-        System.out.println("Color clicked " + position + " color name clicked : " + colorItem.getName());
+
         //get a string containing the hex value of the color clicked
         String hexColor = colorItem.getHex();
-
         String rgbColor = colorItem.getRgb();
-
         String hsvColor = colorItem.getHsv();
-
         String cmykColor = colorItem.getCmyk();
 
         //Create the list of arguments to give to colorDetails
@@ -88,5 +86,11 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         colorD.setArguments(args);
 
         getParentFragmentManager().beginTransaction().replace(R.id.container, colorD).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onLikeClick(int position) {
+        System.out.println("Like clicked ! " + position);
+        dbHandler.addColorLikeToDB(position + 1);
     }
 }
