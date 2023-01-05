@@ -88,6 +88,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         paletteRV.setItemAnimator(new DefaultItemAnimator());
 
         paletteRVAdapter.addItemClickListener(this);
+        paletteRVAdapter.addLikeClickListener(this);
 
         //allow to click on the elements from the recycler view
         //paletteRVAdapter.addItemClickListener(this);
@@ -114,6 +115,11 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         paletteDetails.setArguments(args);
 
         getParentFragmentManager().beginTransaction().replace(R.id.container, paletteDetails).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onLikeClick(int position) {
+        dbHandler.addPaletteLikeToDB(position + 1);
     }
 
 }

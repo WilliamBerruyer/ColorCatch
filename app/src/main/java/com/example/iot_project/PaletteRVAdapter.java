@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,14 +18,13 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
 
     private final ArrayList<PaletteModal> paletteModalArrayList;
     private final Context context;
-    private ItemClickListener mItemClickListener;
+    private ItemClickListener mItemClickListener, likeClickListener;
 
 
     public PaletteRVAdapter(ArrayList<PaletteModal> paletteModalArrayList, Context context){
         this.paletteModalArrayList = paletteModalArrayList;
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -46,6 +46,26 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
                 mItemClickListener.onItemClick(holder.getAdapterPosition());
             }
         });
+
+        if (modal.getLiked() ==  1) {
+            holder.likeButton.setImageResource(R.drawable.like_full);
+            holder.likeButton.setTag("like_full");
+        }
+
+        holder.likeButton.setOnClickListener(view -> {
+            String tag = (String) holder.likeButton.getTag();
+            if(tag.equals("ic_action_likebutton")){
+                holder.likeButton.setImageResource(R.drawable.like_full);
+                holder.likeButton.setTag("like_full");
+            } else if (tag.equals("like_full")) {
+                holder.likeButton.setImageResource(R.drawable.ic_action_likebutton);
+                holder.likeButton.setTag("ic_action_likebutton");
+            }
+
+            if (likeClickListener != null) {
+                likeClickListener.onLikeClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -56,12 +76,16 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
     //Define your Interface method here
     public interface ItemClickListener {
         void onItemClick(int position);
+        void onLikeClick(int position);
     }
 
     public void addItemClickListener(ItemClickListener listener) {
         mItemClickListener = listener;
     }
 
+    public void addLikeClickListener(ItemClickListener listener) {
+        likeClickListener = listener;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -71,6 +95,7 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
         private final CardView cardColor3;
         private final CardView cardColor4;
         private final CardView cardColor5;
+        private final ImageButton likeButton;
 
         private final LinearLayout paletteLayout;
 
@@ -83,6 +108,7 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
             cardColor4 = itemView.findViewById(R.id.paletteColorFour);
             cardColor5 = itemView.findViewById(R.id.paletteColorFive);
             paletteLayout = itemView.findViewById(R.id.paletteLinearLayoutVertical);
+            likeButton = itemView.findViewById(R.id.likeButtonPalette);
         }
     }
 }

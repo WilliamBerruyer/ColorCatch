@@ -59,8 +59,6 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
             }
         });
 
-
-
         if (modal.getLiked() ==  1) {
             holder.likeButton.setImageResource(R.drawable.like_full);
             holder.likeButton.setTag("like_full");

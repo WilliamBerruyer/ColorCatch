@@ -109,7 +109,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // this method is use to add new course to our sqlite database.
-    public void addNewColor(String colorName, String colorHex, String colorRgb, String colorHsv, String colorCmyk, int like,  String time) {
+    public void addNewColor(String colorName, String colorHex, int like,  String time) {
 
         // on below line we are creating a variable for
         // our sqlite database and calling writable method
@@ -124,9 +124,6 @@ public class DBHandler extends SQLiteOpenHelper {
         // along with its key and value pair.
         values.put(NAME_COL, colorName);
         values.put(HEX_COL, colorHex);
-        values.put(RGB_COL, colorRgb);
-        values.put(HSV_COL, colorHsv);
-        values.put(CMYK_COL, colorCmyk);
         values.put(LIKED_COL, like);
         values.put(TIME_COL, time);
 
@@ -219,7 +216,8 @@ public class DBHandler extends SQLiteOpenHelper {
                         cursorPalette.getString(2),
                         cursorPalette.getString(3),
                         cursorPalette.getString(4),
-                        cursorPalette.getString(5)));
+                        cursorPalette.getString(5),
+                        cursorPalette.getInt(6)));
             } while (cursorPalette.moveToNext());
             // moving our cursor to next.
         }
@@ -233,12 +231,10 @@ public class DBHandler extends SQLiteOpenHelper {
         // on below line we are creating a
         // database for reading our database.
         SQLiteDatabase db = this.getReadableDatabase();
-        String c = "#ff4008";
-
 
         //SELECT distinct palettes.ID, palettes.hex, palettes.COlOR1, palettes.COlOR2, palettes.COlOR3, palettes.COlOR4, palettes.COlOR5  FROM palettes left outer join colors on colors.hex = palettes.hex;
-        // on below line we are creating a cursor with query to read data from database. PROBLEM IS HERE
-        Cursor cursorPalette = db.rawQuery("SELECT distinct palettes.hex"  + ", " + COLOR1_COL+ ", " + COLOR2_COL + ", " + COLOR3_COL + ", " + COLOR4_COL + " FROM " + TABLE_PALETTES_NAME + " LEFT OUTER JOIN " + TABLE_COLORS_NAME + " ON colors.hex " + "=" + " palettes.hex" + " WHERE " + " colors.hex " + "= " + DatabaseUtils.sqlEscapeString(color)  , null);
+        // on below line we are creating a cursor with query to read data from database.
+        Cursor cursorPalette = db.rawQuery("SELECT distinct palettes.hex"  + ", " + COLOR1_COL+ ", " + COLOR2_COL + ", " + COLOR3_COL + ", " + COLOR4_COL + ", " + " palettes.liked" + " FROM " + TABLE_PALETTES_NAME + " LEFT OUTER JOIN " + TABLE_COLORS_NAME + " ON colors.hex " + "=" + " palettes.hex" + " WHERE " + " colors.hex " + "= " + DatabaseUtils.sqlEscapeString(color)  , null);
 
         // on below line we are creating a new array list.
         ArrayList<PaletteModal> paletteModalArrayList = new ArrayList<>();
@@ -251,7 +247,8 @@ public class DBHandler extends SQLiteOpenHelper {
                         cursorPalette.getString(1),
                         cursorPalette.getString(2),
                         cursorPalette.getString(3),
-                        cursorPalette.getString(4)));
+                        cursorPalette.getString(4),
+                        cursorPalette.getInt(5)));
             } while (cursorPalette.moveToNext());
             // moving our cursor to next.
         }
@@ -303,7 +300,6 @@ public class DBHandler extends SQLiteOpenHelper {
         int likedValue = getLikedCol(position);
         SQLiteDatabase db = this.getWritableDatabase();
 
-
         if (likedValue == 0) {
             db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 1 + " WHERE " + ID_COL + " = " + position);
         } else if (likedValue == 1){
@@ -311,18 +307,45 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         //close cursor & database
-
         db.close();
+    }
 
+    public void addPaletteLikeToDB(int position){
+        int likedValue = getLikedPal(position);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (likedValue == 0) {
+            db.execSQL("UPDATE " + TABLE_PALETTES_NAME + " SET " + LIKED_COL_PAL + " = " + 1 + " WHERE " + ID_COL_PAL + " = " + position);
+        } else if (likedValue == 1){
+            db.execSQL("UPDATE " + TABLE_PALETTES_NAME + " SET " + LIKED_COL_PAL + " = " + 0 + " WHERE " + ID_COL_PAL + " = " + position);
+        }
+
+        //close cursor & database
+        db.close();
     }
 
     public int getLikedCol(int position){
-        int output = -1;
+        int output = 0;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COLORS_NAME + " WHERE " + ID_COL + "=" + position, null);
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
             int liked_col_index = cursor.getColumnIndex(LIKED_COL);
+            output = cursor.getInt(liked_col_index);
+        }
+        //close cursor & database
+        cursor.close();
+        db.close();
+        return output;
+    }
+
+    public int getLikedPal(int position){
+        int output = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PALETTES_NAME + " WHERE " + ID_COL_PAL + "=" + position, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            int liked_col_index = cursor.getColumnIndex(LIKED_COL_PAL);
             output = cursor.getInt(liked_col_index);
         }
         //close cursor & database

@@ -90,7 +90,6 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
 
     @Override
     public void onLikeClick(int position) {
-        System.out.println("Like clicked ! " + position);
         dbHandler.addColorLikeToDB(position + 1);
     }
 }
