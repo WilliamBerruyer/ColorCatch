@@ -2,4 +2,6 @@
     <string name="app_name">Iot_Project</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="color_catch_logo">Color Catch Logo</string>
+    <string name="like_palette_button">Like Palette Button</string>
 </resources>

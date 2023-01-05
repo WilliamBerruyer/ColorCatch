@@ -47,12 +47,9 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         holder.colorNameTV.setText(modal.getColorName());
         holder.colorTimeTV.setText(modal.getColorTime());
         holder.cardColor.setCardBackgroundColor(modal.getColorHexToInt(modal.getColorHex()));
-        holder.colorLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(holder.getAdapterPosition());
-                }
+        holder.colorLayout.setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(holder.getAdapterPosition());
             }
         });
     }

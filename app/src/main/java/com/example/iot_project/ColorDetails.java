@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ColorDetails extends Fragment {
+public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClickListener {
 
     private ColorUtils colorFinder = new ColorUtils();
 
@@ -87,6 +87,8 @@ public class ColorDetails extends Fragment {
 
         paletteRV.setItemAnimator(new DefaultItemAnimator());
 
+        paletteRVAdapter.addItemClickListener(this);
+
         //allow to click on the elements from the recycler view
         //paletteRVAdapter.addItemClickListener(this);
 
@@ -94,6 +96,24 @@ public class ColorDetails extends Fragment {
 
         // Inflate the layout for this fragment
         return root;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        PaletteModal modal = paletteModalArrayList.get(position);
+        //Create the list of arguments to give to colorDetails
+        Bundle args = new Bundle();
+
+        args.putString("color1", modal.getHexOriginal());
+        args.putString("color2", modal.getC1());
+        args.putString("color3", modal.getC2());
+        args.putString("color4", modal.getC3());
+        args.putString("color5", modal.getC4());
+
+        PaletteDetails paletteDetails = new PaletteDetails();
+        paletteDetails.setArguments(args);
+
+        getParentFragmentManager().beginTransaction().replace(R.id.container, paletteDetails).addToBackStack(null).commit();
     }
 
 }

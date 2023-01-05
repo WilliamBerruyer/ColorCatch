@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
 
     private final ArrayList<PaletteModal> paletteModalArrayList;
     private final Context context;
+    private ItemClickListener mItemClickListener;
 
 
     public PaletteRVAdapter(ArrayList<PaletteModal> paletteModalArrayList, Context context){
@@ -39,6 +41,11 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
         holder.cardColor3.setCardBackgroundColor(modal.getColorHexToInt(modal.getC2()));
         holder.cardColor4.setCardBackgroundColor(modal.getColorHexToInt(modal.getC3()));
         holder.cardColor5.setCardBackgroundColor(modal.getColorHexToInt(modal.getC4()));
+        holder.paletteLayout.setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -46,26 +53,36 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
         return paletteModalArrayList.size();
     }
 
+    //Define your Interface method here
+    public interface ItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void addItemClickListener(ItemClickListener listener) {
+        mItemClickListener = listener;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our text views.
-        private final TextView paletteNameTV;
         private final CardView cardColor1;
         private final CardView cardColor2;
         private final CardView cardColor3;
         private final CardView cardColor4;
         private final CardView cardColor5;
 
+        private final LinearLayout paletteLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our text views
-            paletteNameTV = itemView.findViewById(R.id.colorName);
             cardColor1 = itemView.findViewById(R.id.paletteColorOne);
             cardColor2 = itemView.findViewById(R.id.paletteColorTwo);
             cardColor3 = itemView.findViewById(R.id.paletteColorThree);
             cardColor4 = itemView.findViewById(R.id.paletteColorFour);
             cardColor5 = itemView.findViewById(R.id.paletteColorFive);
+            paletteLayout = itemView.findViewById(R.id.paletteLinearLayoutVertical);
         }
     }
 }
