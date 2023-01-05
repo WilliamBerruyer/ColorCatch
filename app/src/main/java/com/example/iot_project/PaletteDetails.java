@@ -56,10 +56,27 @@ public class PaletteDetails extends Fragment  {
             t4.setText(color4);
             t5.setText(color5);
 
+            setCorrectFontColor(color1, t1);
+            setCorrectFontColor(color2, t2);
+            setCorrectFontColor(color3, t3);
+            setCorrectFontColor(color4, t4);
+            setCorrectFontColor(color5, t5);
+
         }
 
         // Inflate the layout for this fragment
         return root;
+    }
+
+    public void setCorrectFontColor(String bgColor, TextView t){
+        int bg = Color.parseColor(bgColor);
+        int c = Color.parseColor("#7e7f7f");
+
+        if(bg > c){
+            t.setTextColor(Color.BLACK);
+        } else {
+            t.setTextColor(Color.WHITE);
+        }
     }
 
 
