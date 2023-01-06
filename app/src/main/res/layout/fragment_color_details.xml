@@ -30,11 +30,11 @@
                 android:id="@+id/imageLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="22dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/logo_vector" />
+                app:srcCompat="@drawable/logo_vector"
+                android:contentDescription="Color Catch Logo" />
         </RelativeLayout>
 
         <!--Scroll view -->
@@ -99,7 +99,8 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_action_likebutton" />
+                            app:srcCompat="@drawable/ic_action_likebutton"
+                            android:contentDescription="like button" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -272,7 +273,7 @@
                     android:id="@+id/textPaletteSuggestionsHead"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="sans-serif-black"
                     android:gravity="center_vertical"

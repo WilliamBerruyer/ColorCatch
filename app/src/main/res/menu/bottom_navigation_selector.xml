@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:color="@color/colorAccent"
-        android:title="a" />
-    <item android:color="@android:color/darker_gray"
-        android:title="b" />
+    <item
+        android:color="@color/colorAccent"
+        android:state_checked="true"
+        android:title="accent state" />
+    <item
+        android:color="@android:color/darker_gray"
+        android:title="default state" />
 </selector>

@@ -1,6 +1,5 @@
 package com.example.iot_project;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 public class Library extends Fragment implements View.OnClickListener {
-
 
     private LinearLayout palettes;
     private LinearLayout likes;
@@ -29,8 +27,6 @@ public class Library extends Fragment implements View.OnClickListener {
 
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +38,6 @@ public class Library extends Fragment implements View.OnClickListener {
         likes.setOnClickListener(this);
         return root;
     }
-
 
     @Override
     public void onClick(View view) {

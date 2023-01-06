@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -47,6 +46,7 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
             }
         });
 
+        // Like buttons for items behaviour
         if (modal.getLiked() ==  1) {
             holder.likeButton.setImageResource(R.drawable.like_full);
             holder.likeButton.setTag("like_full");
@@ -73,7 +73,7 @@ public class PaletteRVAdapter extends RecyclerView.Adapter<PaletteRVAdapter.View
         return paletteModalArrayList.size();
     }
 
-    //Define your Interface method here
+    // Interface for on click events
     public interface ItemClickListener {
         void onItemClick(int position);
         void onLikeClick(int position);

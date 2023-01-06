@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:title="Catches"
         android:icon="@drawable/ic_action_scanbutton"
-        android:menuCategory="secondary"/>
+        android:menuCategory="secondary"
+        android:title="Catches" />
     <item
         android:id="@+id/library"
-        android:title="Library"
         android:icon="@drawable/ic_action_librarycolor"
-        android:menuCategory="secondary"/>
+        android:menuCategory="secondary"
+        android:title="Library" />
 </menu>

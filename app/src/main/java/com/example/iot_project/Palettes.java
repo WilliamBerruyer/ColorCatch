@@ -31,7 +31,7 @@ public class Palettes extends Fragment implements PaletteRVAdapter.ItemClickList
 
         paletteModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(getActivity());
-        paletteModalArrayList = dbHandler.readPalettes();
+        paletteModalArrayList = dbHandler.readLikedPalettes();
 
         // on below line passing our array lost to our adapter class.
         paletteRVAdapter = new PaletteRVAdapter(paletteModalArrayList, getActivity());

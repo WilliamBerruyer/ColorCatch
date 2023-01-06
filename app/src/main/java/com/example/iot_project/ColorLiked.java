@@ -30,7 +30,7 @@ public class ColorLiked extends Fragment implements ColorRVAdapter.ItemClickList
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_color_liked, container, false);
 
-        // initializing our all variables.
+        // initializing variables.
         colorModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(getActivity());
         colorModalArrayList = dbHandler.readColorsLiked();
@@ -42,9 +42,9 @@ public class ColorLiked extends Fragment implements ColorRVAdapter.ItemClickList
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+
         // setting layout manager for our recycler view.
         colorRV.setLayoutManager(linearLayoutManager);
-
 
         // setting our adapter to recycler view.
         colorRV.setAdapter(colorRVAdapter);
@@ -64,7 +64,7 @@ public class ColorLiked extends Fragment implements ColorRVAdapter.ItemClickList
     @Override
     public void onItemClick(int position) {
 
-        ColorItem colorItem = dbHandler.getSingleDataInfo(position + 1);
+        ColorItem colorItem = dbHandler.readSpecificColor(position + 1);
 
         //get a string containing the hex value of the color clicked
         String hexColor = colorItem.getHex();
@@ -88,6 +88,7 @@ public class ColorLiked extends Fragment implements ColorRVAdapter.ItemClickList
         ColorDetails colorD = new ColorDetails();
         colorD.setArguments(args);
 
+        //call the coloDetails fragment on click of the item in recycler view
         getParentFragmentManager().beginTransaction().replace(R.id.container, colorD).addToBackStack(null).commit();
 
     }

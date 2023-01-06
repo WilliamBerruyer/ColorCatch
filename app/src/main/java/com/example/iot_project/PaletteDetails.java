@@ -69,18 +69,19 @@ public class PaletteDetails extends Fragment implements PaletteRVAdapter.ItemCli
             setCorrectFontColor(color4, t4);
             setCorrectFontColor(color5, t5);
 
-            if (likedString.equals("1")){
+            // handle like button behaviour
+            if (likedString.equals("1")) {
                 likeButton.setImageResource(R.drawable.like_full);
                 likeButton.setTag("like_full");
-            } else if (likedString.equals("0")){
+            } else if (likedString.equals("0")) {
                 likeButton.setImageResource(R.drawable.ic_action_likebutton);
                 likeButton.setTag("ic_action_likebutton");
             }
 
             likeButton.setOnClickListener(view -> {
                 String tag = (String) likeButton.getTag();
-                int pos = Integer.parseInt(position )+1;
-                if(tag.equals("ic_action_likebutton")){
+                int pos = Integer.parseInt(position) + 1;
+                if (tag.equals("ic_action_likebutton")) {
                     likeButton.setImageResource(R.drawable.like_full);
                     likeButton.setTag("like_full");
                 } else if (tag.equals("like_full")) {
@@ -98,11 +99,14 @@ public class PaletteDetails extends Fragment implements PaletteRVAdapter.ItemCli
         return root;
     }
 
-    public void setCorrectFontColor(String bgColor, TextView t){
+    /**
+     * Set the correct font color depending the background the font is displayed on
+     */
+    public void setCorrectFontColor(String bgColor, TextView t) {
         int bg = Color.parseColor(bgColor);
         int c = Color.parseColor("#7e7f7f");
 
-        if(bg > c){
+        if (bg > c) {
             t.setTextColor(Color.BLACK);
         } else {
             t.setTextColor(Color.WHITE);

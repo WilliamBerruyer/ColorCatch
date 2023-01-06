@@ -29,10 +29,10 @@
                 android:id="@+id/imageLogoLibrary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="22dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="22dp"
                 android:layout_marginTop="22dp"
-                android:layout_weight="1"
+                android:contentDescription="@string/color_catch_logo"
                 app:srcCompat="@drawable/logo_vector" />
         </RelativeLayout>
 
@@ -41,7 +41,7 @@
             android:id="@+id/textLibraryHead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
+            android:layout_marginStart="22dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif-black"
             android:gravity="center_vertical"
@@ -71,7 +71,8 @@
                     android:id="@+id/imageLikesList"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="Colors Liked image"
                     app:srcCompat="@drawable/likeslist" />
 
                 <LinearLayout
@@ -92,14 +93,14 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <View
                 android:id="@+id/separator"
                 android:layout_width="fill_parent"
                 android:layout_height="0.4dp"
-                android:background="@android:color/darker_gray"
-                android:visibility="visible"
                 android:layout_marginBottom="15dp"
-                />
+                android:background="@android:color/darker_gray"
+                android:visibility="visible" />
 
             <!-- Palettes Item -->
             <LinearLayout
@@ -113,7 +114,7 @@
                     android:id="@+id/imagePaletteList"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     app:srcCompat="@drawable/palettelist" />
 
                 <LinearLayout
@@ -131,13 +132,8 @@
                         android:text="Palettes Liked"
                         android:textColor="#000000"
                         android:textStyle="bold" />
-
-
                 </LinearLayout>
             </LinearLayout>
-
-
-
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

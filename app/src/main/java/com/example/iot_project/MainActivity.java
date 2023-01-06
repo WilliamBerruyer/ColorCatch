@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //init bottom nav
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -71,16 +73,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
 
             @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
+            public void messageArrived(String topic, MqttMessage message) {
                 String newMessage = new String(message.getPayload());
                 System.out.println("Incoming message: " + newMessage);
                 String[] spStg = newMessage.split(",");
                 int r, g, b;
+
+                // the x4 multiplication allow to have brighter colors because the rgb sensor is detecting really dark colors by default
                 r = Integer.parseInt(spStg[0]) * 4;
                 g = Integer.parseInt(spStg[1]) * 4;
                 b = Integer.parseInt(spStg[2]) * 4;
-
-                System.out.println("R : " + r + " G : " + g + " B :" + b);
 
                 //avoid errors if the colors increase above 255 due to the x4 multiplication
                 if (r > 255) {
@@ -94,15 +96,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
 
                 String colorName = colorFinder.getNameWithSpaces(colorFinder.getColorNameFromRgb(r, g, b));
-
                 String hexColor = colorFinder.colorToHex(r, g, b);
-
                 String rgbColor = colorFinder.colorToRGB(hexColor);
-
-                String hsvColor = colorFinder.colorToHsb(hexColor);
-
+                String hsvColor = colorFinder.colorToHsv(hexColor);
                 String cmykColor = colorFinder.rgbToCmyk(hexColor);
-
                 String timeStamp = colorFinder.getTime();
 
                 // on below line we are calling a method to add new
@@ -114,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().executePendingTransactions();
                 Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("homeFrag");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                assert currentFragment != null;
                 fragmentTransaction.detach(currentFragment).commitNowAllowingStateLoss();
                 fragmentTransaction.attach(currentFragment).commitAllowingStateLoss();
                 fragmentTransaction.commit();
@@ -176,9 +174,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    /**
+     * Redirect to the correct page on the bottom nav
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.home:
                 getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -193,6 +193,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return false;
     }
 
+    /**
+     * Override the Default back button of android to exit the app on back pressed from home page and update the back stack correctly
+     */
     @Override
     public void onBackPressed() {
         try {

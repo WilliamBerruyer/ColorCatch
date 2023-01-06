@@ -19,21 +19,15 @@ import java.util.ArrayList;
 
 public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClickListener {
 
-    private ColorUtils colorFinder = new ColorUtils();
-
     //access to db
     private DBHandler dbHandler;
     private ArrayList<PaletteModal> paletteModalArrayList;
     private PaletteRVAdapter paletteRVAdapter;
     private RecyclerView paletteRV;
 
-
-    //init
-    //SharedPreferences mSettings = getContext().getSharedPreferences(PREFS_NAME, 0);
     public ColorDetails() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,8 +42,8 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         TextView cmykText = root.findViewById(R.id.cmykTextValue);
         ImageButton likeButton = root.findViewById(R.id.likeButton);
 
-
         String hexTextString = "";
+
         //get the arguments from home page
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
@@ -71,18 +65,20 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             hsbText.setText(hsbTextString);
             cmykText.setText(cmykTextString);
 
-            if (likedString.equals("1")){
+            //update the like button for the color
+            if (likedString.equals("1")) {
                 likeButton.setImageResource(R.drawable.like_full);
                 likeButton.setTag("like_full");
-            } else if (likedString.equals("0")){
+            } else if (likedString.equals("0")) {
                 likeButton.setImageResource(R.drawable.ic_action_likebutton);
                 likeButton.setTag("ic_action_likebutton");
             }
 
+            //on click method for the like button for the color
             likeButton.setOnClickListener(view -> {
                 String tag = (String) likeButton.getTag();
-                int pos = Integer.parseInt(position )+1;
-                if(tag.equals("ic_action_likebutton")){
+                int pos = Integer.parseInt(position) + 1;
+                if (tag.equals("ic_action_likebutton")) {
                     likeButton.setImageResource(R.drawable.like_full);
                     likeButton.setTag("like_full");
                 } else if (tag.equals("like_full")) {
@@ -93,6 +89,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             });
         }
 
+        //init variables
         paletteModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(getActivity());
         paletteModalArrayList = dbHandler.readSpecificPalettes(hexTextString);
@@ -104,6 +101,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+
         // setting layout manager for our recycler view.
         paletteRV.setLayoutManager(linearLayoutManager);
 
@@ -112,9 +110,9 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
 
         paletteRV.setItemAnimator(new DefaultItemAnimator());
 
+        //add click listener to item and like buttons to items from the recycler view
         paletteRVAdapter.addItemClickListener(this);
         paletteRVAdapter.addLikeClickListener(this);
-
 
         // Inflate the layout for this fragment
         return root;
@@ -123,6 +121,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
     @Override
     public void onItemClick(int position) {
         PaletteModal modal = paletteModalArrayList.get(position);
+
         //Create the list of arguments to give to colorDetails
         Bundle args = new Bundle();
 
@@ -139,13 +138,13 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         PaletteDetails paletteDetails = new PaletteDetails();
         paletteDetails.setArguments(args);
 
+        //call the palette details fragment on item click in the recycler view
         getParentFragmentManager().beginTransaction().replace(R.id.container, paletteDetails).addToBackStack(null).commit();
     }
 
     @Override
     public void onLikeClick(int position) {
-        System.out.println("clicked on position " + position);
+        //add the palette to the like db on like button click
         dbHandler.addPaletteLikeToDB(position + 1);
     }
-
 }

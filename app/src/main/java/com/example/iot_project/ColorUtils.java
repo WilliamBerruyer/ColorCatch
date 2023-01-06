@@ -2,8 +2,6 @@ package com.example.iot_project;
 
 import android.graphics.Color;
 
-import androidx.core.content.ContextCompat;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,7 +13,7 @@ import java.util.TimeZone;
 public class ColorUtils {
 
     /**
-     * Initialize the color list that we have.
+     * Initialize the color list to detect the color
      */
     private ArrayList<ColorName> initColorList() {
         ArrayList<ColorName> colorList = new ArrayList<ColorName>();
@@ -190,31 +188,25 @@ public class ColorUtils {
         }
     }
 
-    public String getNameWithSpaces(String input){
-        String output = input.replaceAll("(\\p{Ll})(\\p{Lu})","$1 $2");
+    /**
+     * Get the name of the color with spaces when needed
+     * For example IndigoDye -> Indigo Dye
+     */
+    public String getNameWithSpaces(String input) {
+        String output = input.replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2");
         return output;
     }
 
     /**
-     * Convert hexColor to rgb, then call getColorNameFromRgb(r, g, b)
-     *
-     * @param hexColor
-     * @return
+     * Get the time when the color is scanned
      */
-    public String getColorNameFromHex(int hexColor) {
-        int r = (hexColor & 0xFF0000) >> 16;
-        int g = (hexColor & 0xFF00) >> 8;
-        int b = (hexColor & 0xFF);
-        return getColorNameFromRgb(r, g, b);
-    }
-
-    public String getTime(){
-        Long tsLong = System.currentTimeMillis()/1000;
+    public String getTime() {
+        Long tsLong = System.currentTimeMillis() / 1000;
         return getDateCurrentTimeZone(tsLong);
     }
 
-    public  String getDateCurrentTimeZone(long timestamp) {
-        try{
+    public String getDateCurrentTimeZone(long timestamp) {
+        try {
             Calendar calendar = Calendar.getInstance();
             TimeZone tz = TimeZone.getDefault();
             calendar.setTimeInMillis(timestamp * 1000);
@@ -222,21 +214,26 @@ public class ColorUtils {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date currenTimeZone = calendar.getTime();
             return sdf.format(currenTimeZone);
-        }catch (Exception e) {
+        } catch (Exception e) {
         }
         return "";
     }
 
-    public String colorToHex(int red, int green, int blue){
+    /**
+     * Return a String hex value with (r,g,b) int input
+     */
+    public String colorToHex(int red, int green, int blue) {
         String hex = String.format("#%02x%02x%02x", red, green, blue);
         return hex;
     }
 
-    public String colorToRGB(String hex){
+    /**
+     * Return a String rgb value with hex String input
+     */
+    public String colorToRGB(String hex) {
         String hex2 = hex.replaceAll("#", "");
         final int[] ret = new int[3];
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             ret[i] = Integer.parseInt(hex2.substring(i * 2, i * 2 + 2), 16);
         }
 
@@ -249,11 +246,13 @@ public class ColorUtils {
         return output;
     }
 
-    public String colorToHsb(String hex){
+    /**
+     * Return a String Hsv value with a hex String input
+     */
+    public String colorToHsv(String hex) {
         String hex2 = hex.replaceAll("#", "");
         final int[] ret = new int[3];
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             ret[i] = Integer.parseInt(hex2.substring(i * 2, i * 2 + 2), 16);
         }
 
@@ -268,11 +267,12 @@ public class ColorUtils {
         String gS = String.valueOf(lHSB[1]);
         String bS = String.valueOf(lHSB[2]);
 
-        String output = rS + ", " + gS + ", " + bS;
-
-        return output;
+        return rS + ", " + gS + ", " + bS;
     }
 
+    /**
+     * Return a int cmyk value with (r,g,b) int input
+     */
     public int[] rgbToCmykInt(int r, int g, int b) {
         double percentageR = r / 255.0 * 100;
         double percentageG = g / 255.0 * 100;
@@ -281,21 +281,23 @@ public class ColorUtils {
         double k = 100 - Math.max(Math.max(percentageR, percentageG), percentageB);
 
         if (k == 100) {
-            return new int[]{ 0, 0, 0, 100 };
+            return new int[]{0, 0, 0, 100};
         }
 
-        int c = (int)((100 - percentageR - k) / (100 - k) * 100);
-        int m = (int)((100 - percentageG - k) / (100 - k) * 100);
-        int y = (int)((100 - percentageB - k) / (100 - k) * 100);
+        int c = (int) ((100 - percentageR - k) / (100 - k) * 100);
+        int m = (int) ((100 - percentageG - k) / (100 - k) * 100);
+        int y = (int) ((100 - percentageB - k) / (100 - k) * 100);
 
-        return new int[]{ c, m, y, (int)k };
+        return new int[]{c, m, y, (int) k};
     }
 
-    public String rgbToCmyk(String hex){
+    /**
+     * Return a String cmyk with String hex input
+     */
+    public String rgbToCmyk(String hex) {
         String hex2 = hex.replaceAll("#", "");
         final int[] ret = new int[3];
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             ret[i] = Integer.parseInt(hex2.substring(i * 2, i * 2 + 2), 16);
         }
         int r = ret[0];
@@ -313,6 +315,9 @@ public class ColorUtils {
         return output;
     }
 
+    /**
+     * Generate a random color in the shade of pastel from an int input
+     */
     public String generateRandomColor(int mix) {
         Random random = new Random();
         int red = random.nextInt(256);
@@ -325,10 +330,12 @@ public class ColorUtils {
             green = (green + Color.green(mix)) / 2;
             blue = (blue + Color.blue(mix)) / 2;
         }
-        System.out.println("Random PAstel color generated : " + red + ", " + green + ", " + blue);
         return colorToHex(red, green, blue);
     }
 
+    /**
+     * Generate a random bright color from an rgb int input
+     */
     public String generateBrightColorPaletteR(int r, int g, int b, int j) {
         if (j == 0) {
             g = r;
@@ -355,9 +362,6 @@ public class ColorUtils {
 
     /**
      * SubClass of ColorUtils. In order to lookup color name
-     *
-     * @author Xiaoxiao Li
-     *
      */
     public class ColorName {
         public int r, g, b;

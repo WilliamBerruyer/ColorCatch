@@ -23,7 +23,6 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
     private final Context context;
     private ItemClickListener mItemClickListener, likeClickListener;
 
-
     // constructor
     public ColorRVAdapter(ArrayList<ColorModal> colorModalArrayList, Context context) {
         this.colorModalArrayList = colorModalArrayList;
@@ -39,15 +38,17 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         return new ViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // on below line we are setting data
         // to our views of recycler view item.
         ColorModal modal = colorModalArrayList.get(position);
+
         holder.colorNameTV.setText(modal.getColorName());
         holder.colorTimeTV.setText(modal.getColorTime());
         holder.cardColor.setCardBackgroundColor(modal.getColorHexToInt(modal.getColorHex()));
+
+        //below lines manage the behaviour of on click for items of the recycler view
         holder.cardColor.setOnClickListener(view -> {
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(holder.getAdapterPosition());
@@ -59,14 +60,14 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
             }
         });
 
-        if (modal.getLiked() ==  1) {
+        if (modal.getLiked() == 1) {
             holder.likeButton.setImageResource(R.drawable.like_full);
             holder.likeButton.setTag("like_full");
         }
 
         holder.likeButton.setOnClickListener(view -> {
             String tag = (String) holder.likeButton.getTag();
-            if(tag.equals("ic_action_likebutton")){
+            if (tag.equals("ic_action_likebutton")) {
                 holder.likeButton.setImageResource(R.drawable.like_full);
                 holder.likeButton.setTag("like_full");
             } else if (tag.equals("like_full")) {
@@ -80,31 +81,31 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
         });
     }
 
-
     @Override
     public int getItemCount() {
-        // returning the size of our array list
+        // return the size of our array list
         return colorModalArrayList.size();
     }
 
-    //Define your Interface method here
+    //Interface for click listener methods
     public interface ItemClickListener {
         void onItemClick(int position);
+
         void onLikeClick(int position);
     }
 
+    //add listener to elements for items
     public void addItemClickListener(ItemClickListener listener) {
         mItemClickListener = listener;
     }
 
+    //add listener to elements for likes
     public void addLikeClickListener(ItemClickListener listener) {
         likeClickListener = listener;
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        // creating variables for our text views.
+        // creating variables for our views.
         private final TextView colorNameTV;
         private final TextView colorTimeTV;
         private final CardView cardColor;
@@ -119,5 +120,4 @@ public class ColorRVAdapter extends RecyclerView.Adapter<ColorRVAdapter.ViewHold
             likeButton = itemView.findViewById(R.id.likeButton);
         }
     }
-
 }

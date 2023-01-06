@@ -28,8 +28,8 @@
                 android:id="@+id/backArrowLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="40dp"
                 android:layout_marginTop="22dp"
+                android:layout_marginBottom="40dp"
                 app:layout_constraintStart_toStartOf="@+id/scrollView2"
                 app:layout_constraintTop_toTopOf="@+id/scrollView2">
 
@@ -39,18 +39,18 @@
                 android:id="@+id/logoLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
                 app:layout_constraintStart_toStartOf="@+id/scrollView2"
-                app:layout_constraintTop_toTopOf="@+id/scrollView2"
-                android:layout_marginBottom="40dp">
+                app:layout_constraintTop_toTopOf="@+id/scrollView2">
 
                 <ImageView
                     android:id="@+id/imageLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="22dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="22dp"
                     android:layout_marginTop="22dp"
-                    android:layout_weight="1"
+                    android:contentDescription="@string/color_catch_logo"
                     app:srcCompat="@drawable/logo_vector" />
             </RelativeLayout>
 
@@ -59,7 +59,7 @@
                 android:id="@+id/textColorLikedHead"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center_vertical"
@@ -74,8 +74,7 @@
             android:id="@+id/idRVColorsLiked"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="80dp"
-            />
+            android:paddingBottom="80dp" />
 
 
     </LinearLayout>

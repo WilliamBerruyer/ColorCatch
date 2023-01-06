@@ -9,7 +9,7 @@ public class ColorItem {
     String cmyk;
     int liked;
 
-    public void Color(){
+    public void Color() {
 
     }
 

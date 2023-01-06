@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="22dp"
-    >
+    android:layout_marginBottom="22dp">
 
     <!-- Item Palette Template -->
     <LinearLayout
@@ -30,9 +29,7 @@
                 android:id="@+id/paletteColorOne"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="-20dp"
+                android:layout_marginEnd="-20dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="15dp"
                 app:contentPaddingLeft="20dp" />
@@ -41,8 +38,6 @@
                 android:id="@+id/paletteColorTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="1"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="2dp" />
@@ -51,8 +46,6 @@
                 android:id="@+id/paletteColorThree"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="1"
                 app:cardCornerRadius="0dp" />
 
@@ -60,8 +53,6 @@
                 android:id="@+id/paletteColorFour"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="1"
                 app:cardCornerRadius="0dp" />
 
@@ -69,9 +60,7 @@
                 android:id="@+id/paletteColorFive"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="-20dp"
+                android:layout_marginStart="-20dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="1.99dp"
@@ -110,12 +99,12 @@
 
 
                 <ImageButton
-                    android:tag="ic_action_likebutton"
                     android:id="@+id/likeButtonPalette"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:scaleType="fitXY"
+                    android:tag="ic_action_likebutton"
                     app:srcCompat="@drawable/ic_action_likebutton" />
             </LinearLayout>
         </LinearLayout>

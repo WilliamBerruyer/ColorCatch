@@ -62,10 +62,13 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         return root;
     }
 
+    /**
+     * When a color is clicked in the recycler view
+     */
     @Override
     public void onItemClick(int position) {
 
-        ColorItem colorItem = dbHandler.getSingleDataInfo(position + 1);
+        ColorItem colorItem = dbHandler.readSpecificColor(position + 1);
 
         //get a string containing the hex value of the color clicked
         String hexColor = colorItem.getHex();
