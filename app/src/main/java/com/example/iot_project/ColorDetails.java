@@ -144,7 +144,9 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
 
     @Override
     public void onLikeClick(int position) {
+        PaletteModal modal = paletteModalArrayList.get(position);
+
         //add the palette to the like db on like button click
-        dbHandler.addPaletteLikeToDB(position + 1);
+        dbHandler.addPaletteLikeToDB(modal.getHexOriginal(), modal.getC1(), modal.getC2(), modal.getC3(), modal.getC4());
     }
 }

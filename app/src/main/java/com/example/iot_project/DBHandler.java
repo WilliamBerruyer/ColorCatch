@@ -372,14 +372,14 @@ public class DBHandler extends SQLiteOpenHelper {
     /**
      * Modify liked column accordingly (0 or 1) to the palette with id given in params in palettes table in db
      */
-    public void addPaletteLikeToDB(int position) {
-        int likedValue = getLikedPal(position);
+    public void addPaletteLikeToDB(String hex, String color1, String color2, String color3, String color4) {
+        int likedValue = getLikedPal(hex, color1, color2, color3, color4);
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (likedValue == 0) {
-            db.execSQL("UPDATE " + TABLE_PALETTES_NAME + " SET " + LIKED_COL_PAL + " = " + 1 + " WHERE " + ID_COL_PAL + " = " + position);
+            db.execSQL("UPDATE " + TABLE_PALETTES_NAME + " SET " + LIKED_COL_PAL + " = " + 1 + " WHERE " + HEX_COL_PAL + " = " + DatabaseUtils.sqlEscapeString(hex) + " AND " + COLOR1_COL + " = " + DatabaseUtils.sqlEscapeString(color1) + " AND " + COLOR2_COL + " = " + DatabaseUtils.sqlEscapeString(color2) + " AND " + COLOR3_COL + " = " + DatabaseUtils.sqlEscapeString(color3) + " AND " + COLOR4_COL + " = " + DatabaseUtils.sqlEscapeString(color4));
         } else if (likedValue == 1) {
-            db.execSQL("UPDATE " + TABLE_PALETTES_NAME + " SET " + LIKED_COL_PAL + " = " + 0 + " WHERE " + ID_COL_PAL + " = " + position);
+            db.execSQL("UPDATE " + TABLE_PALETTES_NAME + " SET " + LIKED_COL_PAL + " = " + 0 + " WHERE " + HEX_COL_PAL + " = " + DatabaseUtils.sqlEscapeString(hex) + " AND " + COLOR1_COL + " = " + DatabaseUtils.sqlEscapeString(color1) + " AND " + COLOR2_COL + " = " + DatabaseUtils.sqlEscapeString(color2) + " AND " + COLOR3_COL + " = " + DatabaseUtils.sqlEscapeString(color3) + " AND " + COLOR4_COL + " = " + DatabaseUtils.sqlEscapeString(color4));
         }
 
         //close cursor & database
@@ -408,10 +408,10 @@ public class DBHandler extends SQLiteOpenHelper {
     /**
      * Get if a palette is liked or not in the palettes table in database 0 if no, 1 if yes
      */
-    public int getLikedPal(int position) {
+    public int getLikedPal(String hex, String color1, String color2, String color3, String color4) {
         int output = 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PALETTES_NAME + " WHERE " + ID_COL_PAL + "=" + position, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PALETTES_NAME + " WHERE " + HEX_COL_PAL + " = " + DatabaseUtils.sqlEscapeString(hex) + " AND " + COLOR1_COL + " = " + DatabaseUtils.sqlEscapeString(color1) + " AND " + COLOR2_COL + " = " + DatabaseUtils.sqlEscapeString(color2) + " AND " + COLOR3_COL + " = " + DatabaseUtils.sqlEscapeString(color3) + " AND " + COLOR4_COL + " = " + DatabaseUtils.sqlEscapeString(color4), null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             int liked_col_index = cursor.getColumnIndex(LIKED_COL_PAL);

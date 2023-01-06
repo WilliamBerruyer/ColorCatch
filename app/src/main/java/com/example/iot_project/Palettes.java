@@ -80,6 +80,8 @@ public class Palettes extends Fragment implements PaletteRVAdapter.ItemClickList
 
     @Override
     public void onLikeClick(int position) {
-        dbHandler.addPaletteLikeToDB(position + 1);
+        PaletteModal modal = paletteModalArrayList.get(position);
+        //add the palette to the like db on like button click
+        dbHandler.addPaletteLikeToDB(modal.getHexOriginal(), modal.getC1(), modal.getC2(), modal.getC3(), modal.getC4());
     }
 }

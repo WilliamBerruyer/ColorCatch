@@ -80,7 +80,6 @@ public class PaletteDetails extends Fragment implements PaletteRVAdapter.ItemCli
 
             likeButton.setOnClickListener(view -> {
                 String tag = (String) likeButton.getTag();
-                int pos = Integer.parseInt(position) + 1;
                 if (tag.equals("ic_action_likebutton")) {
                     likeButton.setImageResource(R.drawable.like_full);
                     likeButton.setTag("like_full");
@@ -88,7 +87,7 @@ public class PaletteDetails extends Fragment implements PaletteRVAdapter.ItemCli
                     likeButton.setImageResource(R.drawable.ic_action_likebutton);
                     likeButton.setTag("ic_action_likebutton");
                 }
-                dbHandler.addPaletteLikeToDB(pos);
+                dbHandler.addPaletteLikeToDB(color1, color2, color3, color4, color5);
             });
 
             dbHandler = new DBHandler(getActivity());
