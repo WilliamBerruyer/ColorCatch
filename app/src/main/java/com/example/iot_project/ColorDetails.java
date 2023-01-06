@@ -55,7 +55,6 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             String hsbTextString = bundle.getString("hsvValue");
             String cmykTextString = bundle.getString("cmykValue");
             String likedString = bundle.getString("liked");
-            String position = bundle.getString("position");
 
             int col = Color.parseColor(colorHex);
 
@@ -78,7 +77,6 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             //on click method for the like button for the color
             likeButton.setOnClickListener(view -> {
                 String tag = (String) likeButton.getTag();
-                int pos = Integer.parseInt(position) + 1;
                 int idC = Integer.parseInt(id);
                 if (tag.equals("ic_action_likebutton")) {
                     likeButton.setImageResource(R.drawable.like_full);
@@ -129,13 +127,13 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
 
         String liked = String.valueOf(modal.getLiked());
 
+        args.putString("id", String.valueOf(modal.getId()));
         args.putString("color1", modal.getHexOriginal());
         args.putString("color2", modal.getC1());
         args.putString("color3", modal.getC2());
         args.putString("color4", modal.getC3());
         args.putString("color5", modal.getC4());
         args.putString("liked", liked);
-        args.putString("position", String.valueOf(position));
 
         PaletteDetails paletteDetails = new PaletteDetails();
         paletteDetails.setArguments(args);
@@ -149,6 +147,6 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         PaletteModal modal = paletteModalArrayList.get(position);
 
         //add the palette to the like db on like button click
-        dbHandler.addPaletteLikeToDB(modal.getHexOriginal(), modal.getC1(), modal.getC2(), modal.getC3(), modal.getC4());
+        dbHandler.addPaletteLikeToDB(modal.getId());
     }
 }

@@ -63,13 +63,13 @@ public class Palettes extends Fragment implements PaletteRVAdapter.ItemClickList
 
         String liked = String.valueOf(modal.getLiked());
 
+        args.putString("id", String.valueOf(modal.getId()));
         args.putString("color1", modal.getHexOriginal());
         args.putString("color2", modal.getC1());
         args.putString("color3", modal.getC2());
         args.putString("color4", modal.getC3());
         args.putString("color5", modal.getC4());
         args.putString("liked", liked);
-        args.putString("position", String.valueOf(position));
 
         PaletteDetails paletteDetails = new PaletteDetails();
         paletteDetails.setArguments(args);
@@ -82,6 +82,6 @@ public class Palettes extends Fragment implements PaletteRVAdapter.ItemClickList
     public void onLikeClick(int position) {
         PaletteModal modal = paletteModalArrayList.get(position);
         //add the palette to the like db on like button click
-        dbHandler.addPaletteLikeToDB(modal.getHexOriginal(), modal.getC1(), modal.getC2(), modal.getC3(), modal.getC4());
+        dbHandler.addPaletteLikeToDB(modal.getId());
     }
 }

@@ -3,6 +3,7 @@ package com.example.iot_project;
 import android.graphics.Color;
 
 public class PaletteModal {
+    private final int id;
     private final String hexOriginal;
     private final String c1;
     private final String c2;
@@ -10,13 +11,18 @@ public class PaletteModal {
     private final String c4;
     private final int liked;
 
-    public PaletteModal(String hex, String color1, String color2, String color3, String color4, int liked) {
+    public PaletteModal(int id, String hex, String color1, String color2, String color3, String color4, int liked) {
+        this.id = id;
         this.hexOriginal = hex;
         this.c1 = color1;
         this.c2 = color2;
         this.c3 = color3;
         this.c4 = color4;
         this.liked = liked;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getHexOriginal() {
