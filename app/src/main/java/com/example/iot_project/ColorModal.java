@@ -5,17 +5,24 @@ import android.graphics.Color;
 public class ColorModal {
     // variables for our colors,
     private String colorName;
-    private String colorHex;
-    private String colorTime;
-    private int liked;
+    private final String colorHex;
+    private final String colorRgb;
+    private final String colorHsv;
+    private final String colorCmyk;
+    private final String colorTime;
+    private final int liked;
     private int id;
 
     // constructor
-    public ColorModal(String colorName, String colorHex, int liked, String colorTime) {
+    public ColorModal(int id, String colorName, String colorHex, String colorRgb, String colorHsv, String colorCmyk, int liked, String colorTime) {
+        this.id = id;
         this.colorName = colorName;
         this.colorHex = colorHex;
         this.colorTime = colorTime;
         this.liked = liked;
+        this.colorRgb = colorRgb;
+        this.colorHsv = colorHsv;
+        this.colorCmyk = colorCmyk;
     }
 
     // creating getter and setter methods
@@ -50,4 +57,18 @@ public class ColorModal {
     public int getLiked() {
         return liked;
     }
+
+    public String getColorRgb() {
+        return colorRgb;
+    }
+
+    public String getColorHsv() {
+        return colorHsv;
+    }
+
+    public String getColorCmyk() {
+        return colorCmyk;
+    }
+
+
 }

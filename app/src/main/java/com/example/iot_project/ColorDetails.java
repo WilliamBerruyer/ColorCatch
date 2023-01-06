@@ -47,6 +47,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
         //get the arguments from home page
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
+            String id = bundle.getString("id");
             String colorHex = bundle.getString("color");
             String color_name = bundle.getString("name");
             hexTextString = bundle.getString("hexValue");
@@ -78,6 +79,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
             likeButton.setOnClickListener(view -> {
                 String tag = (String) likeButton.getTag();
                 int pos = Integer.parseInt(position) + 1;
+                int idC = Integer.parseInt(id);
                 if (tag.equals("ic_action_likebutton")) {
                     likeButton.setImageResource(R.drawable.like_full);
                     likeButton.setTag("like_full");
@@ -85,7 +87,7 @@ public class ColorDetails extends Fragment implements PaletteRVAdapter.ItemClick
                     likeButton.setImageResource(R.drawable.ic_action_likebutton);
                     likeButton.setTag("ic_action_likebutton");
                 }
-                dbHandler.addColorLikeToDB(pos);
+                dbHandler.addColorLikeToDB(idC);
             });
         }
 

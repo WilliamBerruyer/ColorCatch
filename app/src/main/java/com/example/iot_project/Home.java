@@ -46,7 +46,6 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
         // setting layout manager for our recycler view.
         colorRV.setLayoutManager(linearLayoutManager);
 
-
         // setting our adapter to recycler view.
         colorRV.setAdapter(colorRVAdapter);
 
@@ -68,25 +67,18 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
     @Override
     public void onItemClick(int position) {
 
-        ColorItem colorItem = dbHandler.readSpecificColor(position + 1);
-
-        //get a string containing the hex value of the color clicked
-        String hexColor = colorItem.getHex();
-        String rgbColor = colorItem.getRgb();
-        String hsvColor = colorItem.getHsv();
-        String cmykColor = colorItem.getCmyk();
-
-        String liked = String.valueOf(colorItem.getLiked());
+        ColorModal modal = colorModalArrayList.get(position);
 
         //Create the list of arguments to give to colorDetails
         Bundle args = new Bundle();
-        args.putString("color", hexColor);
-        args.putString("name", colorItem.getName());
-        args.putString("hexValue", hexColor);
-        args.putString("rgbValue", rgbColor);
-        args.putString("hsvValue", hsvColor);
-        args.putString("cmykValue", cmykColor);
-        args.putString("liked", liked);
+        args.putString("id", String.valueOf(modal.getId()));
+        args.putString("color", modal.getColorHex());
+        args.putString("name", modal.getColorName());
+        args.putString("hexValue", modal.getColorHex());
+        args.putString("rgbValue", modal.getColorRgb());
+        args.putString("hsvValue", modal.getColorHsv());
+        args.putString("cmykValue", modal.getColorCmyk());
+        args.putString("liked", String.valueOf(modal.getLiked()));
         args.putString("position", String.valueOf(position));
 
         ColorDetails colorD = new ColorDetails();
@@ -97,6 +89,7 @@ public class Home extends Fragment implements ColorRVAdapter.ItemClickListener {
 
     @Override
     public void onLikeClick(int position) {
-        dbHandler.addColorLikeToDB(position + 1);
+        ColorModal modal = colorModalArrayList.get(position);
+        dbHandler.addColorLikeToDB(modal.getId());
     }
 }

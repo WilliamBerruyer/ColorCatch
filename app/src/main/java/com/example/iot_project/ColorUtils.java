@@ -340,23 +340,19 @@ public class ColorUtils {
         if (j == 0) {
             g = r;
         }
-        ;
         if (j == 1) {
             g = r;
             r = b;
         }
-        ;
         if (j == 2) {
             b = r;
             r = g;
             g = b;
         }
-        ;
         if (j == 3) {
             b = r;
             r = g;
         }
-        ;
         return colorToHex(r, g, b);
     }
 

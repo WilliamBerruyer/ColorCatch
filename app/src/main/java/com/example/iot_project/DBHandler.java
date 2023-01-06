@@ -197,8 +197,12 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursorColor.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list.
-                colorModalArrayList.add(new ColorModal(cursorColor.getString(1),
+                colorModalArrayList.add(new ColorModal(cursorColor.getInt(0),
+                        cursorColor.getString(1),
                         cursorColor.getString(2),
+                        cursorColor.getString(3),
+                        cursorColor.getString(4),
+                        cursorColor.getString(5),
                         cursorColor.getInt(6),
                         cursorColor.getString(7)));
             } while (cursorColor.moveToNext());
@@ -228,8 +232,12 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursorColor.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list. (1: colorName, 2: colorHex, 6: Liked, 7: Time)
-                colorModalArrayList.add(new ColorModal(cursorColor.getString(1),
+                colorModalArrayList.add(new ColorModal(cursorColor.getInt(0),
+                        cursorColor.getString(1),
                         cursorColor.getString(2),
+                        cursorColor.getString(3),
+                        cursorColor.getString(4),
+                        cursorColor.getString(5),
                         cursorColor.getInt(6),
                         cursorColor.getString(7)));
             } while (cursorColor.moveToNext());
@@ -318,51 +326,18 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**
-     * Read the color corresponding to the id given in params in colors table in db
-     */
-    public ColorItem readSpecificColor(int position) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COLORS_NAME + " WHERE " + ID_COL + "=" + position, null);
-        ColorItem color = new ColorItem();
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
-            //setting related user info in User Object
-
-            int name_col_index = cursor.getColumnIndex(NAME_COL);
-            int hex_col_index = cursor.getColumnIndex(HEX_COL);
-            int rgb_col_index = cursor.getColumnIndex(RGB_COL);
-            int hsv_col_index = cursor.getColumnIndex(HSV_COL);
-            int cmyk_col_index = cursor.getColumnIndex(CMYK_COL);
-            int liked_col_index = cursor.getColumnIndex(LIKED_COL);
-
-            color.setName(cursor.getString(name_col_index));
-            color.setHex(cursor.getString(hex_col_index));
-            color.setRgb(cursor.getString(rgb_col_index));
-            color.setHsv(cursor.getString(hsv_col_index));
-            color.setCmyk(cursor.getString(cmyk_col_index));
-            color.setLiked(Integer.parseInt(cursor.getString(liked_col_index)));
-        }
-        //close cursor & database
-        cursor.close();
-        db.close();
-
-        return color;
-    }
 
     /**
      * Modify liked column accordingly (0 or 1) to the color with id given in params in colors table in db
      */
-    public void addColorLikeToDB(int position) {
-        int likedValue = getLikedCol(position);
+    public void addColorLikeToDB(int id) {
+        int likedValue = getLikedCol(id);
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (likedValue == 0) {
-            db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 1 + " WHERE " + ID_COL + " = " + position);
+            db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 1 + " WHERE " + ID_COL + " = " + id);
         } else if (likedValue == 1) {
-            db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 0 + " WHERE " + ID_COL + " = " + position);
+            db.execSQL("UPDATE " + TABLE_COLORS_NAME + " SET " + LIKED_COL + " = " + 0 + " WHERE " + ID_COL + " = " + id);
         }
 
         //close cursor & database
